@@ -2,19 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>King Street Farms</title>
+    <title>King Street Farms - E-Checkout Coming Soon</title>
+    <style>
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+        font-family: system-ui, sans-serif;
+        margin: 0;
+      }
+      .container {
+        background: white;
+        padding: 2rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        text-align: center;
+      }
+      h1 {
+        color: #14532d;
+        margin-bottom: 1rem;
+      }
+      p {
+        color: #374151;
+        font-size: 1.2rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
-      <div id="loader" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
-        <svg class="animate-spin" width="48" height="48" viewBox="0 0 24 24" fill="none">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="gray" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-        </svg>
-      </div>
+    <div class="container">
+      <h1>King Street Farms</h1>
+      <p><b>E-Checkout</b> is coming soon.<br>Stay tuned!</p>
     </div>
-    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
