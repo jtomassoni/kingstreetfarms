@@ -3,11 +3,9 @@ import Shop from './components/Shop.vue'
 </script>
 
 <template>
-  <v-app>
-    <v-main>
-      <Shop />
-    </v-main>
-  </v-app>
+  <div class="min-h-screen bg-gray-50">
+    <Shop />
+  </div>
 </template>
 
 <style>
