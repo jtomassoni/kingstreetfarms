@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+onMounted(() => {
+  const loader = document.getElementById('loader')
+  if (loader) loader.remove()
+})
 import Shop from './components/Shop.vue'
 </script>
 
