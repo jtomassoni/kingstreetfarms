@@ -198,7 +198,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '19" tall x 24" wide (plus 1.5" below for wine glass holders)',
     delivery: 'Delivery available for $15',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/eVq8wOcbQ8zugJg6AL6g800'
   },
   {
     id: 2,
@@ -220,7 +220,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '48" wide x 22" deep x 25.5" tall',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/28E4gy3Fk5ni2Sq8IT6g801'
   },
   {
     id: 3,
@@ -242,7 +242,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '36" wide x 18" deep x 48" tall (custom sizes available)',
     delivery: 'Delivery available in the Denver area for $125',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/4gM5kC4Jo02Y50ygbl6g803'
   },
   {
     id: 4,
@@ -263,32 +263,10 @@ const products = ref<Product[]>([
     ],
     dimensions: '24" wide x 12" deep x 12" tall',
     delivery: 'Delivery available for $15',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/9B6fZg7VA17278Ge3d6g804'
   },
   {
     id: 5,
-    name: 'Large Garden Planter Box',
-    price: 150.00,
-    depositPrice: 75.00,
-    deliveryPrice: 15.00,
-    images: [
-      { src: '/coming-soon.jpg', alt: 'Large garden planter box - ideal for vegetables and larger plants' }
-    ],
-    description: 'Our largest planter box, perfect for growing vegetables or creating a statement piece in your garden. The extra depth provides ample room for root growth, while the cedar construction ensures years of use.',
-    features: [
-      'Extra deep for root vegetables',
-      'Made from premium cedar',
-      'Built-in drainage system',
-      'Perfect for tomatoes and larger plants',
-      'Naturally rot-resistant',
-      'Easy to assemble'
-    ],
-    dimensions: '36" wide x 18" deep x 16" tall',
-    delivery: 'Delivery available for $15',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
-  },
-  {
-    id: 6,
     name: 'Garden Bench',
     price: 225.00,
     depositPrice: 100.00,
@@ -307,12 +285,12 @@ const products = ref<Product[]>([
     ],
     dimensions: '48" wide x 18" deep x 18" tall (seat height)',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/28E5kC1xc7vqfFc2kv6g805'
   },
   {
-    id: 7,
+    id: 6,
     name: 'Quarter Cord Firewood Rack',
-    price: 200.00,
+    price: 250.00,
     depositPrice: 100.00,
     deliveryPrice: 150.00,
     images: [
@@ -328,13 +306,13 @@ const products = ref<Product[]>([
     ],
     dimensions: '2\' x 4\' x 5\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/7sYeVc5Ns9Dy9gO1gr6g806'
   },
   {
-    id: 8,
+    id: 7,
     name: 'Half Cord Firewood Rack',
-    price: 350.00,
-    depositPrice: 150.00,
+    price: 450.00,
+    depositPrice: 200.00,
     deliveryPrice: 150.00,
     images: [
       { src: '/half-cord-2.jpg', alt: 'Half cord firewood rack - alternate view' },
@@ -350,12 +328,12 @@ const products = ref<Product[]>([
     ],
     dimensions: '2\' x 6\' x 6\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/7sY00iejYeXS9gO3oz6g807'
   },
   {
-    id: 9,
+    id: 8,
     name: 'Full Cord Firewood Rack',
-    price: 450.00,
+    price: 750.00,
     depositPrice: 200.00,
     deliveryPrice: 150.00,
     images: [
@@ -371,7 +349,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '4\' x 4\' x 8\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/test_eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808'
   }
 ])
 
@@ -409,7 +387,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 window.addEventListener('keydown', handleKeydown)
 
 const redirectToCheckout = (product: Product) => {
-  window.location.href = product.depositUrl
+  window.open(product.depositUrl, '_blank')
 }
 </script>
 
