@@ -6,7 +6,7 @@
         <div class="flex justify-between h-16 items-center">
           <div class="flex items-center space-x-3">
             <svg viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 w-12"><path d="M0 24L12 8L24 24L36 12L48 24" stroke="#fff8f1" stroke-width="3" fill="none"/><circle cx="36" cy="12" r="2" fill="#a47551"/></svg>
-            <h1 class="text-xl sm:text-2xl font-bold text-[var(--ksf-cream)] tracking-wide drop-shadow">King Street Farms</h1>
+            <h1 class="text-xl sm:text-2xl font-bold text-[var(--ksf-cream)] tracking-wide drop-shadow">King Street Farms - Outdoor Goods</h1>
           </div>
         </div>
       </div>
