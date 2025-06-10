@@ -18,7 +18,7 @@
       <div class="mb-2 text-center">
         <h2 class="text-xl font-bold text-[var(--ksf-green)] mb-1 font-serif">Welcome to King Street Farms!</h2>
         <p class="text-[var(--ksf-dark)] max-w-5xl mx-auto text-sm">
-          Handcrafted firewood racks and wine racks, built to last and designed for Colorado living. Every piece is made to order in the backyard of our first home, with your satisfaction and our local community in mind. Fast turnaround, friendly service, and delivery available in the Denver area. Thank you for supporting local craftsmanship!
+          Handcrafted outdoor goods, built to last in our Denver backyard. Firewood racks, wine racks, and more - all made to order with local materials and care. Fast turnaround and delivery available.
         </p>
       </div>
 
