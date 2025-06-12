@@ -26,7 +26,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-[var(--ksf-green)] text-[var(--ksf-cream)] py-6 mt-8">
+    <footer class="bg-[var(--ksf-green)] text-[var(--ksf-cream)] py-6">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
         <div class="flex space-x-4 mb-2 sm:mb-0">
           <a href="#" @click.prevent="scrollToHero" class="px-3 py-1 rounded-full bg-white/10 text-[var(--ksf-cream)] font-semibold transition-all duration-200 hover:bg-[var(--ksf-brown)] hover:text-white focus:outline-none">Home</a>

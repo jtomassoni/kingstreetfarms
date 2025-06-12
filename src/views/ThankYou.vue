@@ -62,8 +62,8 @@
           <p class="text-[var(--ksf-dark)] mb-4">
             We're here to help! Contact us at:
           </p>
-          <a href="mailto:orders@kingstreetfarms.com" class="text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors duration-200">
-            orders@kingstreetfarms.com
+          <a href="mailto:kingstreetfarms@gmail.com" class="text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors duration-200">
+            kingstreetfarms@gmail.com
           </a>
         </div>
       </div>

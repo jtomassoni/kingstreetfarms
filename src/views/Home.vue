@@ -6,7 +6,7 @@
       <div class="absolute inset-0 w-full h-full z-0">
         <img src="/hero.png" alt="King Street Farms hero" class="w-full h-full object-cover object-center opacity-20" />
         <div class="absolute inset-0 bg-gradient-to-b from-[var(--ksf-green)]/90 to-[var(--ksf-green)]/70"></div>
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-0"></div>
       </div>
 
       <!-- Hero Content -->
@@ -78,11 +78,13 @@
       </div>
     </section>
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8">
-      <!-- Product Section Header -->
-      <div class="mb-4 text-center">
-        <h2 class="text-2xl font-bold text-[var(--ksf-green)] font-serif">Shop All Products</h2>
-        <p class="text-[var(--ksf-dark)] max-w-3xl mx-auto text-base mt-1">Browse our full range of handcrafted goods, made in Denver.</p>
+    <main class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8 pb-0 mb-0">
+      <!-- Unified Product Section Header -->
+      <div class="mb-6 text-center">
+        <h2 class="text-2xl font-bold text-[var(--ksf-green)] font-serif mb-1">Shop All Products</h2>
+        <p class="text-[var(--ksf-dark)] text-base">
+          Browse our full range of handcrafted goods, made in Denver. &nbsp;|&nbsp; <span class="text-[var(--ksf-green)]">Delivery available: $40 + mileage</span>
+        </p>
       </div>
 
       <!-- Product Grid -->
@@ -99,27 +101,18 @@
               class="w-full max-h-36 object-contain rounded transition-opacity"
               style="background: #f8f5f1;"
             >
-            <!-- Mini Gallery Thumbnails (always visible, even for one image) -->
-            <div class="flex space-x-1 mt-1 z-10 min-h-[36px]" @click.stop>
-              <img
-                v-for="(img, idx) in product.images"
-                :key="img.src"
-                :src="img.src"
-                :alt="img.alt"
-                class="w-8 h-8 object-contain rounded border cursor-pointer transition-all duration-150"
-                :class="getCardImageIndex(product.id) === idx ? 'border-[var(--ksf-green)] border-2 ring-2 ring-[var(--ksf-green)]' : 'border-gray-200'"
-                @click="setCardImageIndex(product.id, idx)"
-                v-if="product.images.length > 1"
-              >
-              <!-- For products with only one image, show a single, non-clickable thumbnail -->
-              <img
-                v-if="product.images.length === 1"
-                :src="product.images[0].src"
-                :alt="product.images[0].alt"
-                class="w-8 h-8 object-contain rounded border border-gray-200 opacity-60"
-                style="pointer-events: none;"
-              >
-            </div>
+            <!-- Overlay carousel arrows if multiple images -->
+            <template v-if="product.images.length > 1">
+              <button @click.stop="setCardImageIndex(product.id, (getCardImageIndex(product.id) - 1 + product.images.length) % product.images.length)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 text-[var(--ksf-green)] rounded-full p-1 shadow focus:outline-none z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+              </button>
+              <button @click.stop="setCardImageIndex(product.id, (getCardImageIndex(product.id) + 1) % product.images.length)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 text-[var(--ksf-green)] rounded-full p-1 shadow focus:outline-none z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+              </button>
+              <div class="absolute bottom-2 right-2 bg-white bg-opacity-80 text-[var(--ksf-green)] text-xs rounded-full px-2 py-0.5 shadow">
+                {{ getCardImageIndex(product.id) + 1 }} / {{ product.images.length }}
+              </div>
+            </template>
             <!-- Overlay icon for modal -->
             <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity flex items-center justify-center pointer-events-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,23 +160,41 @@
         </div>
       </div>
 
-      <!-- Delivery Notice -->
-      <div class="mt-3 text-center">
-        <p class="text-sm text-[var(--ksf-dark)] bg-[var(--ksf-cream)] border border-[var(--ksf-brown)] border-opacity-20 px-4 py-2 rounded-lg inline-block max-w-xl">
-          Delivery available in the Denver area for an additional fee. Each item requires a separate checkout while we build a better shopping experience. Thanks for understanding!
-        </p>
-      </div>
-      <!-- Contact Section -->
-      <section id="contact" class="mt-20 mb-16 py-20 text-center bg-[var(--ksf-cream)] rounded-xl shadow-lg max-w-2xl mx-auto">
-        <h2 class="text-3xl font-bold text-[var(--ksf-green)] mb-6 font-serif">Contact</h2>
-        <p class="text-[var(--ksf-dark)] text-xl mb-4">Have questions or want to get in touch?</p>
-        <a href="mailto:kingstreetfarms@gmail.com" class="text-2xl font-bold text-[var(--ksf-brown)] underline hover:text-[var(--ksf-green)]">kingstreetfarms@gmail.com</a>
+      <!-- Contact Section with background -->
+      <section id="contact" class="text-center w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[var(--ksf-brown)] pb-0 mb-0">
+        <div class="flex flex-col items-center justify-center w-full px-4 py-12 max-w-5xl mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-[var(--ksf-cream)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm0 0v4a4 4 0 01-8 0v-4" />
+            <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" fill="none" />
+          </svg>
+          <h2 class="text-3xl font-bold text-[var(--ksf-cream)] mb-2 font-serif">Contact</h2>
+          <div class="w-full flex flex-col md:flex-row md:items-center md:justify-center gap-8 mt-6">
+            <!-- Left: Vertically centered, balanced -->
+            <div class="flex-1 flex flex-col items-center md:items-end md:pr-8 border-b md:border-b-0 md:border-r border-[var(--ksf-cream)]/30 pb-8 md:pb-0 md:mb-0 max-w-xl mx-auto justify-center">
+              <div class="flex flex-col items-center md:items-end w-full px-6">
+                <div class="flex items-center gap-2 mb-2">
+                  <svg xmlns='http://www.w3.org/2000/svg' class='h-8 w-8 text-[var(--ksf-cream)]' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='3' y='5' width='18' height='14' rx='2' fill='none' stroke='currentColor' stroke-width='2'/><path d='M3 7l9 6 9-6' stroke='currentColor' stroke-width='2' fill='none'/></svg>
+                  <a href="mailto:kingstreetfarms@gmail.com" class="text-2xl font-bold text-[var(--ksf-cream)] underline hover:text-white">kingstreetfarms@gmail.com</a>
+                </div>
+                <div class="text-lg text-[var(--ksf-cream)] max-w-md md:text-right font-serif font-semibold mb-1">We'd love to hear from you!</div>
+                <div class="text-base text-[var(--ksf-cream)] max-w-md md:text-right">Questions, feedback, or custom ideas? Drop us a line and our small team will get back to you soon.</div>
+              </div>
+            </div>
+            <!-- Right: Vertically centered, balanced -->
+            <div class="flex-1 flex flex-col items-center md:items-start md:pl-8 text-[var(--ksf-cream)] max-w-xl mx-auto justify-center">
+              <div class="text-lg font-semibold mb-1 text-center md:text-left">We're a small, family-run shop in Denver, and we care about every customer and project.</div>
+              <div class="text-base mb-3 text-center md:text-left">Whether you want something custom or just have a question, we're here to help and always happy to chat.</div>
+              <div class="text-base text-center md:text-left">Already have one of our pieces? Tag us on <span class='underline'>Facebook</span> or <span class='underline'>TikTok</span>—we love seeing your photos and stories!</div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
     <!-- Image Modal -->
     <div 
-      v-if="showModal && currentProduct" 
+      v-if="showModal && currentProduct" n
       class="fixed inset-0 z-50 flex items-center justify-center"
       @click="closeModal"
     >
