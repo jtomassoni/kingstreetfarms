@@ -33,7 +33,7 @@
             <template v-for="(product, idx) in featuredProducts" :key="idx">
               <div v-if="product" 
                    class="bg-white bg-opacity-95 rounded-xl shadow p-2 flex flex-col items-center hover:shadow-lg transition-shadow duration-200 max-w-xs mx-auto w-full">
-                <div class="relative w-full aspect-square mb-2 overflow-hidden rounded-lg max-w-[140px] mx-auto">
+                <div class="relative w-full aspect-square mb-2 overflow-hidden rounded-lg max-w-[140px] mx-auto cursor-pointer" @click="scrollToProduct(product.id)">
                   <img :src="product.images[0].src" 
                        :alt="product.images[0].alt" 
                        class="w-full h-full object-contain transition-opacity duration-200 hover:opacity-90" />
