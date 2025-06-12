@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import ThankYou from '../views/ThankYou.vue'
+import ProductDetails from '../views/ProductDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,6 +22,15 @@ const router = createRouter({
       meta: {
         title: 'Order Confirmation - King Street Farms',
         description: 'Thank you for your order at King Street Farms. We\'re excited to start crafting your custom piece. View your order status and next steps.'
+      }
+    },
+    {
+      path: '/product/:id',
+      name: 'ProductDetails',
+      component: ProductDetails,
+      meta: {
+        title: 'Product Details - King Street Farms',
+        description: 'View details, images, and features for this handcrafted product from King Street Farms.'
       }
     }
   ]

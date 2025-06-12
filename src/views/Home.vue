@@ -1,44 +1,127 @@
 <template>
   <div class="min-h-screen bg-[var(--ksf-cream)]">
-    <!-- Navigation -->
-    <nav class="bg-[var(--ksf-green)] shadow-sm sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-          <div class="flex items-center space-x-3">
-            <svg viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 w-12">
-              <path d="M0 24L12 8L24 24L36 12L48 24" stroke="#fff8f1" stroke-width="3" fill="none"/>
-              <circle cx="36" cy="12" r="2" fill="#a47551"/>
-            </svg>
-            <h1 class="text-xl sm:text-2xl font-bold text-[var(--ksf-cream)] tracking-wide drop-shadow">King Street Farms - Outdoor Goods</h1>
+    <!-- Hero Section -->
+    <section class="relative bg-[var(--ksf-green)] text-[var(--ksf-cream)] py-4 sm:py-6 px-2 flex flex-col items-center justify-center overflow-hidden">
+      <!-- Background with gradient overlay -->
+      <div class="absolute inset-0 w-full h-full z-0">
+        <img src="/hero.png" alt="King Street Farms hero" class="w-full h-full object-cover object-center opacity-20" />
+        <div class="absolute inset-0 bg-gradient-to-b from-[var(--ksf-green)]/90 to-[var(--ksf-green)]/70"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
+        <!-- Main Heading with Animation -->
+        <div class="text-center mb-2 transform transition-all duration-700 ease-out opacity-0 translate-y-4 animate-fade-in-up">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 text-center drop-shadow-lg font-serif">
+            Handcrafted Home Goods,<br class="hidden sm:block" />
+            <span class="text-[var(--ksf-brown)]">Made in Denver</span>
+          </h1>
+          <p class="text-sm sm:text-base max-w-xl mx-auto text-center opacity-90 leading-snug">
+            Beautiful, durable furniture and storage for inside and outside your home. 
+            Built to last, made to order, delivered fast.
+          </p>
+        </div>
+
+        <!-- Featured Products Section -->
+        <div class="w-full max-w-6xl">
+          <!-- Featured Header -->
+          <h2 class="text-lg font-bold text-center mb-2 text-[var(--ksf-cream)] font-serif">Featured Items</h2>
+          
+          <!-- Featured Products Grid with Animation -->
+          <div id="featured" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 transform transition-all duration-700 ease-out opacity-0 translate-y-4 animate-fade-in-up animation-delay-300">
+            <template v-for="(product, idx) in featuredProducts" :key="idx">
+              <div v-if="product" 
+                   class="bg-white bg-opacity-95 rounded-xl shadow p-2 flex flex-col items-center hover:shadow-lg transition-shadow duration-200">
+                <div class="relative w-full aspect-square mb-2 overflow-hidden rounded-lg max-w-[140px] mx-auto">
+                  <img :src="product.images[0].src" 
+                       :alt="product.images[0].alt" 
+                       class="w-full h-full object-contain transition-opacity duration-200 hover:opacity-90" />
+                </div>
+                <h3 class="text-base font-bold text-[var(--ksf-green)] mb-0.5 text-center">{{ product.name }}</h3>
+                <div class="flex flex-col gap-1 w-full">
+                  <div class="text-xs text-[var(--ksf-dark)] text-center mb-1">Total: <span class="font-bold">${{ product.price }}</span></div>
+                  <button
+                    v-if="product.is_retail"
+                    @click="redirectToCheckout(product)"
+                    class="farmhouse-btn w-full px-2 py-1 text-xs font-semibold shadow hover:shadow-md transition-shadow duration-200 mb-1"
+                  >
+                    Buy Now (${{ product.price }})
+                  </button>
+                  <button
+                    v-else
+                    @click="redirectToCheckout(product)"
+                    class="farmhouse-btn w-full px-2 py-1 text-xs font-semibold shadow hover:shadow-md transition-shadow duration-200 mb-1"
+                  >
+                    Pay Deposit (${{ product.depositPrice }})
+                  </button>
+                  <button
+                    @click="scrollToProduct(product.id)"
+                    class="w-full px-2 py-1 text-xs font-semibold border border-[var(--ksf-green)] text-[var(--ksf-green)] bg-transparent rounded hover:bg-[var(--ksf-green)] hover:text-white transition-colors duration-200"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- View All Products Button -->
+          <div class="text-center mt-4">
+            <a href="#shop" 
+               class="farmhouse-btn inline-block px-6 py-2 text-base font-bold shadow hover:shadow-lg transition-shadow duration-200" 
+               @click.prevent="scrollToShop">
+              View All Products
+            </a>
           </div>
         </div>
       </div>
-    </nav>
-
+    </section>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8">
-      <!-- Intro Paragraph -->
-      <div class="mb-2 text-center">
-        <h2 class="text-xl font-bold text-[var(--ksf-green)] mb-1 font-serif">Welcome to King Street Farms!</h2>
-        <p class="text-[var(--ksf-dark)] max-w-5xl mx-auto text-sm">
-          Handcrafted outdoor goods, built to last in our Denver backyard. Firewood racks, wine racks, and more - all made to order with local materials and care. Fast turnaround and delivery available.
-        </p>
+      <!-- Product Section Header -->
+      <div class="mb-4 text-center">
+        <h2 class="text-2xl font-bold text-[var(--ksf-green)] font-serif">Shop All Products</h2>
+        <p class="text-[var(--ksf-dark)] max-w-3xl mx-auto text-base mt-1">Browse our full range of handcrafted goods, made in Denver.</p>
       </div>
 
       <!-- Product Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div v-for="product in products" :key="product.id" class="farmhouse-card overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)]">
+      <div id="shop" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <div v-for="product in products" :key="product.id" :id="`product-${product.id}`" class="farmhouse-card overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full min-h-[420px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)]">
           <!-- Product Image -->
           <div 
-            class="relative aspect-w-1 aspect-h-1 cursor-pointer" 
-            @click="openImageModal(product)"
+            class="relative flex flex-col items-center cursor-pointer pt-2 px-2"
+            @click="openImageModal(product, getCardImageIndex(product.id))"
           >
             <img 
-              :src="product.images[0].src" 
-              :alt="product.images[0].alt" 
-              class="w-full h-40 object-cover group-hover:opacity-90 transition-opacity"
+              :src="product.images[getCardImageIndex(product.id)].src" 
+              :alt="product.images[getCardImageIndex(product.id)].alt" 
+              class="w-full max-h-36 object-contain rounded transition-opacity"
+              style="background: #f8f5f1;"
             >
-            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity flex items-center justify-center">
+            <!-- Mini Gallery Thumbnails (always visible, even for one image) -->
+            <div class="flex space-x-1 mt-1 z-10 min-h-[36px]" @click.stop>
+              <img
+                v-for="(img, idx) in product.images"
+                :key="img.src"
+                :src="img.src"
+                :alt="img.alt"
+                class="w-8 h-8 object-contain rounded border cursor-pointer transition-all duration-150"
+                :class="getCardImageIndex(product.id) === idx ? 'border-[var(--ksf-green)] border-2 ring-2 ring-[var(--ksf-green)]' : 'border-gray-200'"
+                @click="setCardImageIndex(product.id, idx)"
+                v-if="product.images.length > 1"
+              >
+              <!-- For products with only one image, show a single, non-clickable thumbnail -->
+              <img
+                v-if="product.images.length === 1"
+                :src="product.images[0].src"
+                :alt="product.images[0].alt"
+                class="w-8 h-8 object-contain rounded border border-gray-200 opacity-60"
+                style="pointer-events: none;"
+              >
+            </div>
+            <!-- Overlay icon for modal -->
+            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity flex items-center justify-center pointer-events-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" />
               </svg>
@@ -46,15 +129,15 @@
           </div>
 
           <!-- Product Info -->
-          <div class="flex flex-col flex-1 p-3">
+          <div class="flex flex-col flex-1 p-2 pt-1">
             <div class="mb-1">
-              <h3 class="text-base font-semibold text-[var(--ksf-green)] font-serif">{{ product.name }}</h3>
-              <p class="text-xs text-[var(--ksf-brown)] mt-0.5 font-mono">{{ product.dimensions }}</p>
+              <h3 class="text-base font-semibold text-[var(--ksf-green)] font-serif leading-tight">{{ product.name }}</h3>
+              <p class="text-xs text-[var(--ksf-brown)] mt-0.5 font-mono leading-tight">{{ product.dimensions }}</p>
             </div>
-            <p class="text-xs text-[var(--ksf-dark)] mb-2">{{ product.description }}</p>
+            <p class="text-xs text-[var(--ksf-dark)] mb-1 leading-snug">{{ product.description }}</p>
             
             <!-- Features List -->
-            <ul class="text-xs text-[var(--ksf-dark)] mb-2 space-y-1">
+            <ul class="text-xs text-[var(--ksf-dark)] mb-1 space-y-0.5">
               <li v-for="feature in product.features" :key="feature" class="flex items-start">
                 <svg class="h-3 w-3 text-[var(--ksf-green)] mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -63,20 +146,22 @@
               </li>
             </ul>
 
-            <div class="mt-auto pt-2 border-t border-gray-100">
-              <div class="flex flex-col space-y-2">
-                <div class="flex justify-between items-baseline">
-                  <div>
-                    <p class="text-base font-semibold text-[var(--ksf-green)]">${{ product.price }} total</p>
-                  </div>
-                </div>
-                <button 
-                  @click="redirectToCheckout(product)"
-                  class="w-full farmhouse-btn py-1.5 px-3 text-sm text-center text-white font-semibold hover:bg-[var(--ksf-brown)] transition-colors duration-200"
-                >
-                  Pay ${{ product.depositPrice }} Deposit
-                </button>
-              </div>
+            <div class="mt-auto pt-1 border-t border-gray-100">
+              <div class="text-xs text-[var(--ksf-dark)] text-center mb-1">Total: <span class="font-bold">${{ product.price }}</span></div>
+              <button
+                v-if="product.is_retail"
+                @click="redirectToCheckout(product)"
+                class="w-full farmhouse-btn py-1 px-2 text-sm text-center text-white font-semibold hover:bg-[var(--ksf-brown)] transition-colors duration-200"
+              >
+                Buy Now (${{ product.price }})
+              </button>
+              <button
+                v-else
+                @click="redirectToCheckout(product)"
+                class="w-full farmhouse-btn py-1 px-2 text-sm text-center text-white font-semibold hover:bg-[var(--ksf-brown)] transition-colors duration-200"
+              >
+                Pay Deposit (${{ product.depositPrice }})
+              </button>
             </div>
           </div>
         </div>
@@ -88,6 +173,12 @@
           Delivery available in the Denver area for an additional fee. Each item requires a separate checkout while we build a better shopping experience. Thanks for understanding!
         </p>
       </div>
+      <!-- Contact Section -->
+      <section id="contact" class="mt-20 mb-16 py-20 text-center bg-[var(--ksf-cream)] rounded-xl shadow-lg max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold text-[var(--ksf-green)] mb-6 font-serif">Contact</h2>
+        <p class="text-[var(--ksf-dark)] text-xl mb-4">Have questions or want to get in touch?</p>
+        <a href="mailto:kingstreetfarms@gmail.com" class="text-2xl font-bold text-[var(--ksf-brown)] underline hover:text-[var(--ksf-green)]">kingstreetfarms@gmail.com</a>
+      </section>
     </main>
 
     <!-- Image Modal -->
@@ -155,6 +246,27 @@
   </div>
 </template>
 
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+</style>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 
@@ -175,11 +287,15 @@ interface Product {
   dimensions: string
   delivery: string
   depositUrl: string
+  is_retail: boolean
 }
 
 const showModal = ref(false)
 const currentProduct = ref<Product | null>(null)
 const currentImageIndex = ref(0)
+
+// Track the main image index for each product card
+const cardImageIndexes = ref<{ [key: number]: number }>({})
 
 const products = ref<Product[]>([
   {
@@ -201,18 +317,20 @@ const products = ref<Product[]>([
     ],
     dimensions: '19" tall x 24" wide (plus 1.5" below for wine glass holders)',
     delivery: 'Delivery available for $15',
-    depositUrl: 'https://buy.stripe.com/eVq8wOcbQ8zugJg6AL6g800'
+    depositUrl: 'https://buy.stripe.com/8x27sK4Jo8zu9gO0cn6g80d',
+    is_retail: true
   },
   {
     id: 2,
     name: 'Waterproof Patio Storage Bench',
-    price: 350.00,
+    price: 300.00,
     depositPrice: 150.00,
     deliveryPrice: 150.00,
     images: [
-      { src: '/coming-soon.jpg', alt: 'Waterproof patio storage bench - fully sealed for maximum protection' }
+      { src: '/open-patio-storage-box.jpg', alt: 'Waterproof patio storage bench with open lid showing spacious interior' },
+      { src: '/closed-patio-storage-box.jpg', alt: 'Waterproof patio storage bench with closed lid' }
     ],
-    description: 'Our premium waterproof storage bench offers versatile outdoor storage with complete weather protection. Perfect for storing cushions, gardening tools, or outdoor toys while providing a cozy spot to relax. Built to withstand Colorado\'s unpredictable weather year-round.',
+    description: 'Our premium waterproof storage bench offers versatile storage with complete weather protection. Perfect for storing cushions, gardening tools, or outdoor toys while providing a cozy spot to relax. Built to withstand Colorado\'s unpredictable weather year-round.',
     features: [
       'Fully waterproof construction',
       'Dual-purpose design: bench and storage',
@@ -223,16 +341,17 @@ const products = ref<Product[]>([
     ],
     dimensions: '48" wide x 22" deep x 25.5" tall',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/28E4gy3Fk5ni2Sq8IT6g801'
+    depositUrl: 'https://buy.stripe.com/28E4gy3Fk5ni2Sq8IT6g801',
+    is_retail: false
   },
   {
     id: 3,
     name: 'Backyard Tool Shed',
-    price: 275.00,
+    price: 300.00,
     depositPrice: 125.00,
     deliveryPrice: 125.00,
     images: [
-      { src: '/coming-soon.jpg', alt: 'Backyard tool shed - vertical storage cabinet with barn-style doors' }
+      { src: '/tool-shed.png', alt: 'Backyard tool shed - vertical storage cabinet with barn-style doors' }
     ],
     description: 'Keep your tools dry, organized, and out of sight. This compact vertical cabinet is built tough with pressure-treated lumber, slatted for ventilation, and styled to match our firewood racks. Perfect for patios, side yards, or against a fence.',
     features: [
@@ -245,16 +364,17 @@ const products = ref<Product[]>([
     ],
     dimensions: '36" wide x 18" deep x 48" tall (custom sizes available)',
     delivery: 'Delivery available in the Denver area for $125',
-    depositUrl: 'https://buy.stripe.com/4gM5kC4Jo02Y50ygbl6g803'
+    depositUrl: 'https://buy.stripe.com/4gM5kC4Jo02Y50ygbl6g803',
+    is_retail: false
   },
   {
     id: 4,
     name: 'Standard Planter Box',
-    price: 85.00,
-    depositPrice: 40.00,
+    price: 60.00,
+    depositPrice: 30.00,
     deliveryPrice: 15.00,
     images: [
-      { src: '/coming-soon.jpg', alt: 'Standard planter box - perfect for herbs and flowers' }
+      { src: '/standard-planter-box.jpg', alt: 'Standard planter box - perfect for herbs and flowers' }
     ],
     description: 'A versatile planter box perfect for herbs, flowers, or small vegetables. Made from premium cedar, this planter brings natural beauty to your garden while providing excellent drainage and durability.',
     features: [
@@ -266,16 +386,17 @@ const products = ref<Product[]>([
     ],
     dimensions: '24" wide x 12" deep x 12" tall',
     delivery: 'Delivery available for $15',
-    depositUrl: 'https://buy.stripe.com/9B6fZg7VA17278Ge3d6g804'
+    depositUrl: 'https://buy.stripe.com/7sYeVcfo2eXS9gOgbl6g80e',
+    is_retail: true
   },
   {
     id: 5,
     name: 'Garden Bench',
-    price: 225.00,
-    depositPrice: 100.00,
+    price: 100.00,
+    depositPrice: 50.00,
     deliveryPrice: 150.00,
     images: [
-      { src: '/coming-soon.jpg', alt: 'Handcrafted garden bench - perfect for enjoying your outdoor space' }
+      { src: '/2-by-4-garden-bench.jpg', alt: 'Handcrafted garden bench - perfect for enjoying your outdoor space' }
     ],
     description: 'A beautiful handcrafted garden bench that brings comfort and style to your outdoor space. Made from premium pressure-treated lumber, this bench is built to last through Colorado seasons while providing a perfect spot to enjoy your garden.',
     features: [
@@ -288,7 +409,8 @@ const products = ref<Product[]>([
     ],
     dimensions: '48" wide x 18" deep x 18" tall (seat height)',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/28E5kC1xc7vqfFc2kv6g805'
+    depositUrl: 'https://buy.stripe.com/28E5kC1xc7vqfFc2kv6g805',
+    is_retail: true
   },
   {
     id: 6,
@@ -309,7 +431,8 @@ const products = ref<Product[]>([
     ],
     dimensions: '2\' x 4\' x 5\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/7sYeVc5Ns9Dy9gO1gr6g806'
+    depositUrl: 'https://buy.stripe.com/dRm00i8ZE1728cK1gr6g80c',
+    is_retail: true
   },
   {
     id: 7,
@@ -318,8 +441,8 @@ const products = ref<Product[]>([
     depositPrice: 200.00,
     deliveryPrice: 150.00,
     images: [
-      { src: '/half-cord-2.jpg', alt: 'Half cord firewood rack - alternate view' },
-      { src: '/half-cord.jpg', alt: 'Half cord firewood rack with sturdy construction' }
+      { src: '/half-cord.jpg', alt: 'Half cord firewood rack with sturdy construction' },
+      { src: '/half-cord-2.jpg', alt: 'Half cord firewood rack - alternate view' }
     ],
     description: 'The perfect solution for serious firewood storage. Built to withstand Colorado winters with no wobbles, rust, or squeaky plastic. Just clean, solid construction that looks great in any yard.',
     features: [
@@ -331,7 +454,8 @@ const products = ref<Product[]>([
     ],
     dimensions: '2\' x 6\' x 6\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/7sY00iejYeXS9gO3oz6g807'
+    depositUrl: 'https://buy.stripe.com/7sY00iejYeXS9gO3oz6g807',
+    is_retail: false
   },
   {
     id: 8,
@@ -352,13 +476,88 @@ const products = ref<Product[]>([
     ],
     dimensions: '4\' x 4\' x 8\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808'
+    depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808',
+    is_retail: false
+  },
+  {
+    id: 9,
+    name: 'Utility Meter & Panel Cover Cabinet',
+    price: 350.00,
+    depositPrice: 200.00,
+    deliveryPrice: 150.00,
+    images: [
+      { src: '/utility-cover.jpg', alt: 'Outdoor utility meter and panel cover cabinet' }
+    ],
+    description: "Protect and conceal your home's electrical meter and panel with this custom-built outdoor cabinet. Designed to shield your utility equipment from the elements while providing extra storage space. Features a weather-resistant sloped roof, double doors for easy access, and a clean look that blends with your home's exterior.",
+    features: [
+      'Fits standard electrical meters and panels',
+      'Weather-resistant construction',
+      'Sloped roof for water runoff',
+      'Double doors with sturdy handles',
+      'Extra storage shelf for tools or supplies',
+      'Custom sizing available',
+      'Made from premium exterior-grade materials'
+    ],
+    dimensions: '36" wide x 20" deep x 54" tall (custom sizes available)',
+    delivery: 'Delivery available within Denver area for $150',
+    depositUrl: 'https://buy.stripe.com/aFafZg0t8eXSakScZ96g80a',
+    is_retail: false
+  },
+  {
+    id: 10,
+    name: 'River Resin Dining Table',
+    price: 750.00,
+    depositPrice: 300.00,
+    deliveryPrice: 150.00,
+    images: [
+      { src: '/resin-table.jpg', alt: 'Resin dining/desk table with unique design' }
+    ],
+    description: 'A stunning resin dining or desk table that combines functionality with artistic design. Perfect for your dining room or home office, this table features a unique resin design that creates a conversation piece while providing a durable surface for dining, working, or entertaining. Each table is handcrafted with attention to detail and premium materials.',
+    features: [
+      'Premium resin and wood construction',
+      'Unique artistic design elements',
+      'Sturdy and durable construction',
+      'Perfect for dining rooms or home offices',
+      'Seats 4-6 people comfortably',
+      'Easy to clean and maintain',
+      'Handcrafted in our Denver workshop'
+    ],
+    dimensions: '72" wide x 36" deep x 30" tall',
+    delivery: 'Delivery available within Denver area for $150',
+    depositUrl: 'https://buy.stripe.com/7sYbJ0cbQ4je0Ki4sD6g809',
+    is_retail: false
+  },
+  {
+    id: 11,
+    name: 'River Resin Side Table',
+    price: 200.00,
+    depositPrice: 100.00,
+    deliveryPrice: 15.00,
+    images: [
+      { src: '/side-table-green.jpg', alt: 'Green side table - natural and earthy tone' },
+      { src: '/side-table-blue.jpg', alt: 'Blue side table - perfect for living room or bedroom' },
+      { src: '/side-table-black.jpg', alt: 'Black side table - sleek and modern design' }
+    ],
+    description: 'Add a pop of color to your living space with our premium colorful side tables. $200 gets you one side table, or get a set of two for $350. Available in multiple colors, these tables are crafted with high-quality materials and perfect for complementing your furniture while providing a convenient surface for drinks, books, or decorative items. Each table is handcrafted with care in our Denver workshop.',
+    features: [
+      'Available in multiple colors (blue, black, green)',
+      'Premium materials and construction',
+      'Heavy-duty design for stability',
+      'Perfect for living rooms, bedrooms, or offices',
+      'Easy to clean and maintain',
+      'Handcrafted in our Denver workshop',
+      'Set of two available for $350'
+    ],
+    dimensions: '20" wide x 20" deep x 16" tall',
+    delivery: 'Delivery available for $15',
+    depositUrl: 'https://buy.stripe.com/aFa3cu4Jo4je1OmaR16g80b',
+    is_retail: false
   }
-])
+]);
 
-const openImageModal = (product: Product) => {
+const openImageModal = (product: Product, imageIndex = 0) => {
   currentProduct.value = product
-  currentImageIndex.value = 0
+  currentImageIndex.value = imageIndex
   showModal.value = true
 }
 
@@ -397,13 +596,47 @@ const redirectToCheckout = (product: Product) => {
       value: product.depositPrice,
       items: [{
         item_id: product.id.toString(),
-        item_name: product.name,
-        price: product.depositPrice
+        item_name: product.name
       }]
     })
   }
   
   // Redirect to checkout
   window.open(product.depositUrl, '_blank')
+}
+
+// Set the main image index for a product card
+const setCardImageIndex = (productId: number, imageIndex: number) => {
+  cardImageIndexes.value[productId] = imageIndex
+}
+
+// Get the main image index for a product card (default to 0)
+const getCardImageIndex = (productId: number) => {
+  return cardImageIndexes.value[productId] ?? 0
+}
+
+// Select favorite products for the hero grid
+const featuredProducts = ref([
+  products.value.find(p => p.name.includes('River Resin Side Table')),
+  products.value.find(p => p.name.includes('Quarter Cord')),
+  products.value.find(p => p.name.includes('Wine Rack')),
+  products.value.find(p => p.name.includes('Garden Bench')),
+].filter(Boolean))
+
+// Smooth scroll to shop
+function scrollToShop() {
+  const el = document.getElementById('shop')
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
+}
+
+function scrollToProduct(productId: number) {
+  const el = document.getElementById(`product-${productId}`)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+// Add scroll to featured function
+function scrollToFeatured() {
+  const el = document.getElementById('featured')
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 </script> 
