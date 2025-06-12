@@ -1,147 +1,171 @@
 <template>
   <div class="min-h-screen bg-[var(--ksf-cream)]">
     <!-- Hero Section -->
-    <section class="relative bg-[var(--ksf-green)] text-[var(--ksf-cream)] py-4 sm:py-6 px-2 flex flex-col items-center justify-center overflow-hidden">
+    <section id="hero" class="relative bg-[var(--ksf-green)] text-[var(--ksf-cream)] flex flex-col items-center justify-start overflow-visible min-h-0 h-auto min-h-[400px] max-h-[900px] pt-8 pb-2 sm:h-[85vh] sm:min-h-[600px] sm:pt-12 sm:pb-8 scroll-mt-24" style="min-height:0;">
       <!-- Background with gradient overlay -->
       <div class="absolute inset-0 w-full h-full z-0">
-        <img src="/hero.png" alt="King Street Farms hero" class="w-full h-full object-cover object-center opacity-20" />
-        <div class="absolute inset-0 bg-gradient-to-b from-[var(--ksf-green)]/90 to-[var(--ksf-green)]/70"></div>
+        <img src="/hero.png" alt="King Street Farms hero" class="w-full h-full object-cover object-center opacity-10" />
+        <div class="absolute inset-0 bg-gradient-to-b from-[var(--ksf-green)]/95 to-[var(--ksf-green)]/80"></div>
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-0"></div>
       </div>
 
       <!-- Hero Content -->
-      <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
+      <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto items-center justify-start pt-8 pb-8 sm:pt-12 sm:pb-12">
         <!-- Main Heading with Animation -->
-        <div class="text-center mb-2 transform transition-all duration-700 ease-out opacity-0 translate-y-4 animate-fade-in-up">
-          <h1 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-1 text-center drop-shadow-lg font-serif">
-            Handcrafted Home Goods,<br class="hidden sm:block" />
-            <span class="text-[var(--ksf-brown)]">Made in Denver</span>
+        <div class="text-center mb-8 mt-2 sm:mt-4 transform transition-all duration-700 ease-out opacity-0 translate-y-2 animate-fade-in-up">
+          <h1 class="text-lg sm:text-2xl md:text-3xl font-bold mb-4 text-center drop-shadow-lg font-serif leading-tight">
+            Handcrafted Home Goods, <span class="text-[var(--ksf-brown)]">Made in Denver</span>
           </h1>
-          <p class="text-base xs:text-lg sm:text-xl max-w-xl mx-auto text-center opacity-90 leading-snug">
-            Beautiful, durable furniture and storage for inside and outside your home. 
-            Built to last, made to order, delivered fast.
+          <p class="text-xs sm:text-sm max-w-xs mx-auto text-center opacity-90 leading-snug mb-0">
+            Beautiful, durable furniture and storage for your home.
           </p>
         </div>
+      </div>
 
-        <!-- Featured Products Section -->
-        <div class="w-full max-w-6xl">
-          <!-- Featured Header -->
-          <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2 text-[var(--ksf-cream)] font-serif">Featured Items</h2>
-          
-          <!-- Featured Products Grid with Animation -->
-          <div id="featured" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-            <template v-for="(product, idx) in featuredProducts" :key="idx">
-              <div v-if="product" 
-                   class="bg-white bg-opacity-95 rounded-xl shadow p-2 flex flex-col items-center hover:shadow-lg transition-shadow duration-200 max-w-xs mx-auto w-full">
-                <div class="relative w-full aspect-square mb-2 overflow-hidden rounded-lg max-w-[140px] mx-auto cursor-pointer" @click="scrollToProduct(product.id)">
-                  <img :src="product.images[0].src" 
-                       :alt="product.images[0].alt" 
-                       class="w-full h-full object-contain transition-opacity duration-200 hover:opacity-90" />
+      <!-- Featured Products Grid Overlapping Hero -->
+      <div class="relative z-20 w-full flex flex-col items-center -mt-4 sm:-mt-8">
+        <div class="w-full flex flex-col gap-4 px-2 sm:max-w-5xl sm:flex-row sm:overflow-visible sm:gap-6 sm:justify-center">
+          <template v-for="(product, idx) in featuredProducts" :key="idx">
+            <div v-if="product"
+              class="product-tile relative rounded-3xl shadow-2xl transition-all duration-200 flex flex-col items-center w-full max-w-xs min-h-[220px] sm:min-h-[320px] group cursor-pointer border-4 border-[var(--ksf-green)] mx-auto sm:mx-0 overflow-hidden"
+              style="min-width: 0;"
+              @click="() => { console.log('Featured tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
+            >
+              <!-- Full Background Image -->
+              <div class="absolute inset-0 w-full h-full z-0">
+                <img
+                  :src="product.images[getCardImageIndex(product.id)].src"
+                  :alt="product.images[getCardImageIndex(product.id)].alt"
+                  class="w-full h-full object-cover object-center"
+                />
+                <!-- Next Arrow (only if multiple images) -->
+                <template v-if="product.images.length > 1">
+                  <button
+                    @click.stop="() => { console.log('Featured gallery button clicked'); cycleCardImage(product.id); }"
+                    class="gallery-button absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 hover:bg-opacity-75 transition-all duration-200"
+                    type="button"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </template>
+              </div>
+              <!-- Overlay for readability -->
+              <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
+              <!-- Product Info Overlay -->
+              <div class="tile-content relative z-20 flex flex-col w-full h-full justify-end p-4 text-left">
+                <h3 class="text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
+                <div class="flex items-center justify-between w-full mb-2">
+                  <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
                 </div>
-                <h3 class="text-base font-bold text-[var(--ksf-green)] mb-0.5 text-center">{{ product.name }}</h3>
-                <div class="flex flex-col gap-1 w-full">
-                  <div class="text-xs text-[var(--ksf-dark)] text-center mb-1">Total: <span class="font-bold">${{ product.price }}</span></div>
+                <div class="flex flex-col gap-2 w-full">
+                  <div class="view-details w-full text-center text-white text-sm font-bold mb-1 bg-black/30 py-1 px-2 rounded" style="backdrop-filter: blur(2px);">
+                    Click anywhere to view details
+                  </div>
                   <button
                     v-if="product.is_retail"
-                    @click="redirectToCheckout(product)"
-                    class="farmhouse-btn w-full px-2 py-1 text-xs font-semibold shadow hover:shadow-md transition-shadow duration-200 mb-1"
+                    @click.stop="redirectToCheckout(product)"
+                    class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
                   >
-                    Buy Now (${{ product.price }})
+                    <span class="relative z-10">Buy Now (${{ product.price }})</span>
                   </button>
                   <button
                     v-else
-                    @click="redirectToCheckout(product)"
-                    class="farmhouse-btn w-full px-2 py-1 text-xs font-semibold shadow hover:shadow-md transition-shadow duration-200 mb-1"
+                    @click.stop="redirectToCheckout(product)"
+                    class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
                   >
-                    Pay Deposit (${{ product.depositPrice }})
-                  </button>
-                  <button
-                    @click="scrollToProduct(product.id)"
-                    class="w-full px-2 py-1 text-xs font-semibold border border-[var(--ksf-green)] text-[var(--ksf-green)] bg-transparent rounded hover:bg-[var(--ksf-green)] hover:text-white transition-colors duration-200"
-                  >
-                    View Details
+                    <span class="relative z-10">Pay Deposit (${{ product.depositPrice }})</span>
                   </button>
                 </div>
               </div>
-            </template>
-          </div>
-
-          <!-- View All Products Button -->
-          <div class="text-center mt-4">
-            <a href="#shop" 
-               class="farmhouse-btn inline-block px-6 py-2 text-base font-bold shadow hover:shadow-lg transition-shadow duration-200" 
-               @click.prevent="scrollToShop">
+            </div>
+          </template>
+        </div>
+        <!-- View All Products Button -->
+        <div class="text-center mt-8 mb-12">
+          <a href="#shop" 
+             class="view-all-btn inline-block px-8 py-3 text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 bg-[var(--ksf-cream)] text-[var(--ksf-green)] border-2 border-[var(--ksf-green)] hover:bg-[var(--ksf-green)] hover:text-[var(--ksf-cream)] rounded-lg relative overflow-hidden group" 
+             @click.prevent="scrollToShop">
+            <span class="relative z-10 flex items-center justify-center gap-2">
               View All Products
-            </a>
-          </div>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </span>
+          </a>
         </div>
       </div>
     </section>
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8 pb-0 mb-0">
       <!-- Unified Product Section Header -->
-      <div class="mb-6 text-center">
+      <div id="shop" class="mb-6 text-center scroll-mt-24">
         <h2 class="text-2xl font-bold text-[var(--ksf-green)] font-serif mb-1">Shop All Products</h2>
         <p class="text-[var(--ksf-dark)] text-base">
-          Browse our full range of handcrafted goods, made in Denver. &nbsp;|&nbsp; <span class="text-[var(--ksf-green)]">Delivery available: $40 + mileage</span>
+          Browse our full range of handcrafted goods, made in Denver. &nbsp;|&nbsp; <span class="text-[var(--ksf-green)]">Delivery available in Denver area. Some products available for shipping.</span>
         </p>
       </div>
 
       <!-- Product Grid -->
-      <div id="shop" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <div v-for="product in products" :key="product.id" :id="`product-${product.id}`" class="farmhouse-card overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full min-h-[420px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] max-w-xs mx-auto w-full">
-          <!-- Product Image -->
-          <div 
-            class="relative flex flex-col items-center cursor-pointer pt-2 px-2"
-            @click="openImageModal(product, getCardImageIndex(product.id))"
-          >
-            <img 
-              :src="product.images[getCardImageIndex(product.id)].src" 
-              :alt="product.images[getCardImageIndex(product.id)].alt" 
-              class="w-full max-h-36 object-contain rounded transition-opacity"
-              style="background: #f8f5f1;"
-            >
-            <!-- Overlay icon for modal -->
-            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity flex items-center justify-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m4-3H6" />
-              </svg>
-            </div>
-          </div>
-
-          <!-- Product Info -->
-          <div class="flex flex-col flex-1 p-2 pt-1">
-            <div class="mb-1">
-              <h3 class="text-base font-semibold text-[var(--ksf-green)] font-serif leading-tight">{{ product.name }}</h3>
-              <p class="text-xs text-[var(--ksf-brown)] mt-0.5 font-mono leading-tight">{{ product.dimensions }}</p>
-            </div>
-            <p class="text-xs text-[var(--ksf-dark)] mb-1 leading-snug">{{ product.description }}</p>
-            
-            <!-- Features List -->
-            <ul class="text-xs text-[var(--ksf-dark)] mb-1 space-y-0.5">
-              <li v-for="feature in product.features" :key="feature" class="flex items-start">
-                <svg class="h-3 w-3 text-[var(--ksf-green)] mt-0.5 mr-1.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <div 
+          v-for="product in products" 
+          :key="product.id" 
+          :id="`product-${product.id}`" 
+          class="product-tile relative rounded-2xl shadow-lg transition-all duration-200 flex flex-col items-center max-w-xs mx-auto w-full min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] overflow-hidden cursor-pointer"
+          @click="() => { console.log('Tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
+        >
+          <!-- Featured badge for main grid only -->
+          <span v-if="featuredProducts.includes(product)" class="absolute top-4 left-4 bg-[var(--ksf-brown)] text-[var(--ksf-cream)] text-xs font-bold px-3 py-1 rounded-full shadow flex items-center gap-1 z-20" style="box-shadow: 0 2px 8px rgba(0,0,0,0.10);">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z"/></svg>
+            Featured
+          </span>
+          <!-- Full Background Image -->
+          <div class="absolute inset-0 w-full h-full z-0">
+            <img
+              :src="product.images[getCardImageIndex(product.id)].src"
+              :alt="product.images[getCardImageIndex(product.id)].alt"
+              class="w-full h-full object-cover object-center"
+            />
+            <!-- Next Arrow (only if multiple images) -->
+            <template v-if="product.images.length > 1">
+              <button
+                @click.stop="() => { console.log('Gallery button clicked'); cycleCardImage(product.id); }"
+                class="gallery-button absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10"
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
-                {{ feature }}
-              </li>
-            </ul>
-
-            <div class="mt-auto pt-1 border-t border-gray-100">
-              <div class="text-xs text-[var(--ksf-dark)] text-center mb-1">Total: <span class="font-bold">${{ product.price }}</span></div>
+              </button>
+            </template>
+          </div>
+          <!-- Overlay for readability -->
+          <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
+          <!-- Product Info Overlay -->
+          <div class="tile-content relative z-20 flex flex-col w-full h-full justify-end p-4 text-left">
+            <h3 class="text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
+            <div class="flex items-center justify-between w-full mb-2">
+              <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
+            </div>
+            <div class="flex flex-col gap-2 w-full">
+              <div class="view-details w-full text-center text-white text-sm font-bold mb-1 bg-black/30 py-1 px-2 rounded" style="backdrop-filter: blur(2px);">
+                Click anywhere to view details
+              </div>
               <button
                 v-if="product.is_retail"
-                @click="redirectToCheckout(product)"
-                class="w-full farmhouse-btn py-1 px-2 text-sm text-center text-white font-semibold hover:bg-[var(--ksf-brown)] transition-colors duration-200"
+                @click.stop="redirectToCheckout(product)"
+                class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
               >
-                Buy Now (${{ product.price }})
+                <span class="relative z-10">Buy Now (${{ product.price }})</span>
               </button>
               <button
                 v-else
-                @click="redirectToCheckout(product)"
-                class="w-full farmhouse-btn py-1 px-2 text-sm text-center text-white font-semibold hover:bg-[var(--ksf-brown)] transition-colors duration-200"
+                @click.stop="redirectToCheckout(product)"
+                class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
               >
-                Pay Deposit (${{ product.depositPrice }})
+                <span class="relative z-10">Pay Deposit (${{ product.depositPrice }})</span>
               </button>
             </div>
           </div>
@@ -149,7 +173,7 @@
       </div>
 
       <!-- Contact Section with background -->
-      <section id="contact" class="text-center w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[var(--ksf-brown)] pb-0 mb-0">
+      <section id="contact" class="text-center w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[var(--ksf-brown)] pb-0 mb-0 scroll-mt-24">
         <div class="flex flex-col items-center justify-center w-full px-4 py-12 max-w-5xl mx-auto">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-[var(--ksf-cream)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm0 0v4a4 4 0 01-8 0v-4" />
@@ -182,70 +206,126 @@
 
     <!-- Image Modal -->
     <div 
-      v-if="showModal && currentProduct" n
+      v-if="showModal && currentProduct"
       class="fixed inset-0 z-50 flex items-center justify-center"
       @click="closeModal"
     >
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-black bg-opacity-75"></div>
-      
-      <!-- Modal Content: only image and arrows, tightly wrapped -->
+      <!-- Modal Content: image and details side by side on desktop, stacked on mobile -->
       <div 
-        class="relative z-10 max-w-4xl w-full mx-4 flex flex-col items-center"
-        style="pointer-events: none;"
+        class="relative z-10 max-w-4xl w-full mx-4 flex flex-col sm:flex-row items-center sm:items-stretch bg-white rounded-lg overflow-hidden"
+        style="pointer-events: auto;"
+        @click.stop
       >
         <!-- Close Button -->
         <button 
           @click.stop="closeModal"
-          class="absolute -top-12 right-0 text-white hover:text-[var(--ksf-brown)] transition-colors"
-          style="pointer-events: auto;"
+          class="absolute top-2 right-2 text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors z-20"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <!-- Image and arrows: pointer-events enabled -->
-        <div class="relative" style="pointer-events: auto;">
-          <img 
-            :src="currentProduct.images[currentImageIndex].src"
-            :alt="currentProduct.images[currentImageIndex].alt"
-            class="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-          >
-          <!-- Navigation Arrows (only show if multiple images) -->
-          <template v-if="currentProduct.images.length > 1">
-            <button 
-              @click.stop="prevImage"
-              class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+        <!-- Image/Gallery -->
+        <div class="w-full sm:w-1/2 flex flex-col items-center justify-center bg-black/80 p-4 relative">
+          <div class="relative w-full flex items-center justify-center">
+            <img 
+              :src="currentProduct.images[currentImageIndex].src"
+              :alt="currentProduct.images[currentImageIndex].alt"
+              class="w-full h-auto max-h-[60vh] object-contain rounded-lg bg-white"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button 
-              @click.stop="nextImage"
-              class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+            <!-- Navigation Arrows (only show if multiple images) -->
+            <template v-if="currentProduct.images.length > 1">
+              <button 
+                @click.stop="prevImage"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button 
+                @click.stop="nextImage"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </template>
+            <!-- Image Counter (only show if multiple images) -->
+            <div 
+              v-if="currentProduct.images.length > 1"
+              class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-10"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </template>
-          <!-- Image Counter (only show if multiple images) -->
-          <div 
-            v-if="currentProduct.images.length > 1"
-            class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm"
-          >
-            {{ currentImageIndex + 1 }} / {{ currentProduct.images.length }}
+              {{ currentImageIndex + 1 }} / {{ currentProduct.images.length }}
+            </div>
           </div>
         </div>
-        <!-- Subtle close message, pointer-events none so backdrop receives click -->
-        <p class="text-xs text-center text-white/80 mt-2 select-none" style="pointer-events: none;">Click anywhere outside the photo to close.</p>
+        <!-- Details -->
+        <div class="w-full sm:w-1/2 flex flex-col justify-center p-6 bg-white text-[var(--ksf-dark)]">
+          <h2 class="text-2xl font-bold font-serif mb-2 text-[var(--ksf-green)]">{{ currentProduct.name }}</h2>
+          <div class="text-lg font-bold mb-2">${{ currentProduct.price }}</div>
+          <div class="mb-2 text-sm text-[var(--ksf-brown)] font-mono">{{ currentProduct.dimensions }}</div>
+          <div class="mb-4 text-base">{{ currentProduct.description }}</div>
+          <ul class="mb-4 text-sm list-disc pl-5">
+            <li v-for="feature in currentProduct.features" :key="feature">{{ feature }}</li>
+          </ul>
+          <div class="mb-4 text-sm">{{ currentProduct.delivery }}</div>
+          <div class="flex flex-col gap-2 w-full mt-2">
+            <button
+              v-if="currentProduct.is_retail"
+              @click.stop="redirectToCheckout(currentProduct)"
+              class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+            >
+              <span class="relative z-10">Buy Now (${{ currentProduct.price }})</span>
+            </button>
+            <button
+              v-else
+              @click.stop="redirectToCheckout(currentProduct)"
+              class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+            >
+              <span class="relative z-10">Pay Deposit (${{ currentProduct.depositPrice }})</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* Simplified button styles - remove all complex animations */
+.product-tile .tile-content button {
+  position: relative;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Simple hover effect for buttons */
+.product-tile:hover .tile-content button {
+  background-color: var(--ksf-green) !important;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.product-tile .tile-content button:hover {
+  background-color: var(--ksf-brown) !important;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Simple active state */
+.product-tile .tile-content button:active {
+  transform: scale(0.98);
+}
+
+/* Remove all complex animations and effects */
+.product-tile .tile-content button::before,
+.product-tile .tile-content button::after {
+  display: none;
+}
+
+/* Keep other styles but remove button-specific animations */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -261,9 +341,53 @@
   animation: fade-in-up 0.7s ease-out forwards;
 }
 
-.animation-delay-300 {
-  animation-delay: 300ms;
+/* Gallery button styles - keep simple */
+.gallery-button {
+  transition: all 0.2s ease;
+  opacity: 0;
 }
+
+.product-tile:hover .gallery-button {
+  opacity: 1;
+}
+
+.gallery-button:hover {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Tile overlay transition - keep simple */
+.tile-overlay {
+  transition: all 0.3s ease;
+}
+
+.product-tile:hover .tile-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.3) 100%);
+}
+
+/* View details text - keep simple */
+.view-details {
+  transition: all 0.2s ease;
+}
+
+.product-tile:hover .view-details {
+  opacity: 0.8;
+}
+
+/* Keep view all button styles but simplify */
+.view-all-btn {
+  transition: all 0.2s ease;
+}
+
+.view-all-btn:hover {
+  background-color: var(--ksf-green) !important;
+  color: var(--ksf-cream) !important;
+}
+
+.view-all-btn:active {
+  transform: scale(0.98);
+}
+
+/* Remove all other keyframe animations */
 </style>
 
 <script setup lang="ts">
@@ -551,10 +675,39 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/aFa3cu4Jo4je1OmaR16g80b',
     is_retail: false
+  },
+  {
+    id: 12,
+    name: 'Beeswax Candle Set (2-pack)',
+    price: 30.00,
+    depositPrice: 15.00,
+    deliveryPrice: 10.00,
+    images: [
+      { src: '/two-candle-bees-wax-set.png', alt: 'Two candle beeswax set' },
+      { src: '/two-candle-bees-wax-on-window.jpg', alt: 'Two candle beeswax set displayed on window sill' }
+    ],
+    description: 'Includes 1x 3"x4" and 1x 2"x3" candle. Clean burning, natural, and perfect for cozy evenings or gifts. Made from 100% local beeswax from bees in southwest Denver.',
+    features: [
+      'Includes two candles',
+      '100% pure beeswax',
+      'Hand-poured in Denver',
+      'Clean burning, no additives',
+      'Natural honey scent',
+      'Perfect for gifts or home use'
+    ],
+    dimensions: 'Set: 1x 3\"x4\", 1x 2\"x3\"',
+    delivery: 'Delivery available for $10',
+    depositUrl: 'https://buy.stripe.com/3cI9AS8ZEaHC8cKcZ96g80f',
+    is_retail: true
   }
 ]);
 
 const openImageModal = (product: Product, imageIndex = 0) => {
+  console.log('Opening modal for product', product?.id, 'at index', imageIndex)
+  if (!product) {
+    console.log('No product provided')
+    return
+  }
   currentProduct.value = product
   currentImageIndex.value = imageIndex
   showModal.value = true
@@ -604,22 +757,18 @@ const redirectToCheckout = (product: Product) => {
   window.open(product.depositUrl, '_blank')
 }
 
-// Set the main image index for a product card
-const setCardImageIndex = (productId: number, imageIndex: number) => {
-  cardImageIndexes.value[productId] = imageIndex
-}
-
 // Get the main image index for a product card (default to 0)
 const getCardImageIndex = (productId: number) => {
-  return cardImageIndexes.value[productId] ?? 0
+  const index = cardImageIndexes.value[productId] || 0
+  console.log('Getting image index for product', productId, ':', index)
+  return index
 }
 
 // Select favorite products for the hero grid
 const featuredProducts = ref([
-  products.value.find(p => p.name.includes('River Resin Side Table')),
-  products.value.find(p => p.name.includes('Quarter Cord')),
+  products.value.find(p => p.name.includes('Beeswax Candle Set')),
   products.value.find(p => p.name.includes('Wine Rack')),
-  products.value.find(p => p.name.includes('Garden Bench')),
+  products.value.find(p => p.name.includes('Quarter Cord')),
 ].filter(Boolean))
 
 // Smooth scroll to shop
@@ -637,5 +786,23 @@ function scrollToProduct(productId: number) {
 function scrollToFeatured() {
   const el = document.getElementById('featured')
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+// Update the cycleCardImage function to handle image cycling properly
+function cycleCardImage(productId: number) {
+  console.log('Cycling image for product', productId)
+  const product = products.value.find(p => p.id === productId)
+  if (!product || product.images.length <= 1) {
+    console.log('No product found or only one image')
+    return
+  }
+  
+  const currentIndex = getCardImageIndex(productId)
+  const newIndex = (currentIndex + 1) % product.images.length
+  console.log('Setting new index to', newIndex)
+  // Force a reactive update by creating a new object
+  const newIndexes = { ...cardImageIndexes.value }
+  newIndexes[productId] = newIndex
+  cardImageIndexes.value = newIndexes
 }
 </script> 
