@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-[var(--ksf-cream)]">
     <!-- Hero Section -->
-    <section id="hero" class="relative bg-[var(--ksf-green)] text-[var(--ksf-cream)] flex flex-col items-center justify-start overflow-visible min-h-0 h-auto min-h-[400px] max-h-[900px] pt-8 pb-2 sm:h-[85vh] sm:min-h-[600px] sm:pt-12 sm:pb-8 scroll-mt-24" style="min-height:0;">
+    <section id="hero" class="relative bg-[var(--ksf-green)] text-[var(--ksf-cream)] flex flex-col items-center justify-start overflow-visible min-h-0 h-auto min-h-[350px] sm:min-h-[400px] max-h-none pt-6 sm:pt-8 pb-2 sm:pb-8 sm:min-h-[600px] scroll-mt-24" style="min-height:0; min-height:100vh;">
       <!-- Background with gradient overlay -->
       <div class="absolute inset-0 w-full h-full z-0">
         <img src="/hero.png" alt="King Street Farms hero" class="w-full h-full object-cover object-center opacity-10" />
@@ -10,24 +10,24 @@
       </div>
 
       <!-- Hero Content -->
-      <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto items-center justify-start pt-8 pb-8 sm:pt-12 sm:pb-12">
+      <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto items-center justify-start pt-6 sm:pt-8 pb-6 sm:pb-8 px-4 sm:px-6">
         <!-- Main Heading with Animation -->
-        <div class="text-center mb-8 mt-2 sm:mt-4 transform transition-all duration-700 ease-out opacity-0 translate-y-2 animate-fade-in-up">
-          <h1 class="text-lg sm:text-2xl md:text-3xl font-bold mb-4 text-center drop-shadow-lg font-serif leading-tight">
+        <div class="text-center mb-6 sm:mb-8 mt-2 sm:mt-4 transform transition-all duration-700 ease-out opacity-0 translate-y-2 animate-fade-in-up">
+          <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center drop-shadow-lg font-serif leading-tight">
             Handcrafted Home Goods, <span class="text-[var(--ksf-brown)]">Made in Denver</span>
           </h1>
-          <p class="text-xs sm:text-sm max-w-xs mx-auto text-center opacity-90 leading-snug mb-0">
+          <p class="text-sm sm:text-base max-w-xs sm:max-w-sm mx-auto text-center opacity-90 leading-snug mb-0">
             Beautiful, durable furniture and storage for your home.
           </p>
         </div>
       </div>
 
       <!-- Featured Products Grid Overlapping Hero -->
-      <div class="relative z-20 w-full flex flex-col items-center -mt-4 sm:-mt-8">
-        <div class="w-full flex flex-col gap-4 px-2 sm:max-w-5xl sm:flex-row sm:overflow-visible sm:gap-6 sm:justify-center">
+      <div class="relative z-20 w-full flex flex-col items-center -mt-2 sm:-mt-8">
+        <div class="w-full flex flex-col gap-3 sm:gap-4 px-3 sm:px-4 sm:max-w-5xl sm:flex-row sm:overflow-visible sm:gap-6 sm:justify-center">
           <template v-for="(product, idx) in featuredProducts" :key="idx">
             <div v-if="product"
-              class="product-tile relative rounded-3xl shadow-2xl transition-all duration-200 flex flex-col items-center w-full max-w-xs min-h-[220px] sm:min-h-[320px] group cursor-pointer border-4 border-[var(--ksf-green)] mx-auto sm:mx-0 overflow-hidden"
+              class="product-tile featured-tile relative rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl transition-all duration-200 flex flex-col items-center w-full max-w-[280px] sm:max-w-xs min-h-[320px] sm:min-h-[420px] max-h-[480px] sm:max-h-[600px] group cursor-pointer border-2 sm:border-4 border-[var(--ksf-green)] mx-auto sm:mx-0 overflow-hidden"
               style="min-width: 0;"
               @click="() => { console.log('Featured tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
             >
@@ -38,42 +38,45 @@
                   :alt="product.images[getCardImageIndex(product.id)].alt"
                   class="w-full h-full object-cover object-center"
                 />
-                <!-- Next Arrow (only if multiple images) -->
-                <template v-if="product.images.length > 1">
-                  <button
-                    @click.stop="() => { console.log('Featured gallery button clicked'); cycleCardImage(product.id); }"
-                    class="gallery-button absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10 hover:bg-opacity-75 transition-all duration-200"
-                    type="button"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </template>
+                <!-- Multiple Images Indicator -->
+                <div v-if="product.images.length > 1" class="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1.5 sm:py-2 rounded-full text-xs flex items-center gap-1 z-10 gallery-count-tall" style="min-height:2.2rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {{ product.images.length }}
+                </div>
               </div>
               <!-- Overlay for readability -->
               <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
               <!-- Product Info Overlay -->
-              <div class="tile-content relative z-20 flex flex-col w-full h-full justify-end p-4 text-left">
-                <h3 class="text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
+              <div class="tile-content relative z-20 flex flex-col w-full h-full min-h-[200px] sm:min-h-[320px] justify-end p-3 sm:p-4 text-left tile-content-bottom">
+                <h3 class="text-base sm:text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
                 <div class="flex items-center justify-between w-full mb-2">
-                  <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
+                  <div class="price text-base sm:text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
                 </div>
-                <div class="flex flex-col gap-2 w-full">
-                  <div class="view-details w-full text-center text-white text-sm font-bold mb-1 bg-black/30 py-1 px-2 rounded" style="backdrop-filter: blur(2px);">
-                    Click anywhere to view details
-                  </div>
+                <div class="flex flex-col gap-1.5 sm:gap-2 w-full">
+                  <div v-if="product && featuredProducts.includes(product)" class="featured-spacer"></div>
+                  <!-- Centered view details indicator for desktop, bottom bar for mobile -->
+                  <span class="view-details-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <span class="indicator-text">View details</span>
+                  </span>
+                  <!-- Mobile bottom bar for tap for details -->
+                  <span class="mobile-tap-bar">Tap for details</span>
                   <button
                     v-if="product.is_retail"
                     @click.stop="redirectToCheckout(product)"
-                    class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+                    class="w-full farmhouse-btn py-1.5 sm:py-2 px-3 sm:px-4 text-sm sm:text-base font-bold shadow-md transition-all duration-300 mb-1 sm:mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
                   >
                     <span class="relative z-10">Buy Now (${{ product.price }})</span>
                   </button>
                   <button
                     v-else
                     @click.stop="redirectToCheckout(product)"
-                    class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+                    class="w-full farmhouse-btn py-1.5 sm:py-2 px-3 sm:px-4 text-sm sm:text-base font-bold shadow-md transition-all duration-300 mb-1 sm:mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
                   >
                     <span class="relative z-10">Pay Deposit (${{ product.depositPrice }})</span>
                   </button>
@@ -82,14 +85,15 @@
             </div>
           </template>
         </div>
+
         <!-- View All Products Button -->
-        <div class="text-center mt-8 mb-12">
+        <div class="text-center mt-2 sm:mt-2 mb-2 sm:mb-2">
           <a href="#shop" 
-             class="view-all-btn inline-block px-8 py-3 text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 bg-[var(--ksf-cream)] text-[var(--ksf-green)] border-2 border-[var(--ksf-green)] hover:bg-[var(--ksf-green)] hover:text-[var(--ksf-cream)] rounded-lg relative overflow-hidden group" 
+             class="view-all-btn inline-block px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 bg-[var(--ksf-cream)] text-[var(--ksf-green)] border-2 border-[var(--ksf-green)] hover:bg-[var(--ksf-green)] hover:text-[var(--ksf-cream)] rounded-lg relative overflow-hidden group" 
              @click.prevent="scrollToShop">
-            <span class="relative z-10 flex items-center justify-center gap-2">
+            <span class="relative z-10 flex items-center justify-center gap-1.5 sm:gap-2">
               View All Products
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 transform transition-transform duration-300 group-hover:translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </span>
@@ -98,27 +102,27 @@
       </div>
     </section>
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-2 sm:px-6 lg:px-8 pb-0 mb-0">
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-4 pb-0 mb-0">
       <!-- Unified Product Section Header -->
-      <div id="shop" class="mb-6 text-center scroll-mt-24">
-        <h2 class="text-2xl font-bold text-[var(--ksf-green)] font-serif mb-1">Shop All Products</h2>
-        <p class="text-[var(--ksf-dark)] text-base">
+      <div id="shop" class="mb-4 sm:mb-6 text-center scroll-mt-24">
+        <h2 class="text-xl sm:text-2xl font-bold text-[var(--ksf-green)] font-serif mb-1">Shop All Products</h2>
+        <p class="text-sm sm:text-base text-[var(--ksf-dark)]">
           Browse our full range of handcrafted goods, made in Denver. &nbsp;|&nbsp; <span class="text-[var(--ksf-green)]">Delivery available in Denver area. Some products available for shipping.</span>
         </p>
       </div>
 
       <!-- Product Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 pb-8 sm:pb-12">
         <div 
           v-for="product in products" 
           :key="product.id" 
           :id="`product-${product.id}`" 
-          class="product-tile relative rounded-2xl shadow-lg transition-all duration-200 flex flex-col items-center max-w-xs mx-auto w-full min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] overflow-hidden cursor-pointer"
+          class="product-tile relative rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg transition-all duration-200 flex flex-col items-center max-w-[280px] sm:max-w-xs mx-auto w-full min-h-[420px] sm:min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] overflow-hidden cursor-pointer"
           @click="() => { console.log('Tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
         >
           <!-- Featured badge for main grid only -->
-          <span v-if="featuredProducts.includes(product)" class="absolute top-4 left-4 bg-[var(--ksf-brown)] text-[var(--ksf-cream)] text-xs font-bold px-3 py-1 rounded-full shadow flex items-center gap-1 z-20" style="box-shadow: 0 2px 8px rgba(0,0,0,0.10);">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z"/></svg>
+          <span v-if="featuredProducts.includes(product)" class="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[var(--ksf-brown)] text-[var(--ksf-cream)] text-xs font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-full shadow flex items-center gap-1 z-20 featured-badge-mobile-fix" style="box-shadow: 0 2px 8px rgba(0,0,0,0.10); min-height: 2.2rem;">
+            <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z"/></svg>
             Featured
           </span>
           <!-- Full Background Image -->
@@ -128,18 +132,13 @@
               :alt="product.images[getCardImageIndex(product.id)].alt"
               class="w-full h-full object-cover object-center"
             />
-            <!-- Next Arrow (only if multiple images) -->
-            <template v-if="product.images.length > 1">
-              <button
-                @click.stop="() => { console.log('Gallery button clicked'); cycleCardImage(product.id); }"
-                class="gallery-button absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10"
-                type="button"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </template>
+            <!-- Multiple Images Indicator -->
+            <div v-if="product.images.length > 1" class="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1.5 sm:py-2 rounded-full text-xs flex items-center gap-1 z-10 gallery-count-tall" style="min-height:2.2rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {{ product.images.length }}
+            </div>
           </div>
           <!-- Overlay for readability -->
           <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
@@ -150,9 +149,16 @@
               <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
             </div>
             <div class="flex flex-col gap-2 w-full">
-              <div class="view-details w-full text-center text-white text-sm font-bold mb-1 bg-black/30 py-1 px-2 rounded" style="backdrop-filter: blur(2px);">
-                Click anywhere to view details
-              </div>
+              <!-- Centered view details indicator for desktop, bottom bar for mobile -->
+              <span class="view-details-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span class="indicator-text">View details</span>
+              </span>
+              <!-- Mobile bottom bar for tap for details -->
+              <span class="mobile-tap-bar">Tap for details</span>
               <button
                 v-if="product.is_retail"
                 @click.stop="redirectToCheckout(product)"
@@ -172,32 +178,33 @@
         </div>
       </div>
 
-      <!-- Contact Section with background -->
-      <section id="contact" class="text-center w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[var(--ksf-brown)] pb-0 mb-0 scroll-mt-24">
-        <div class="flex flex-col items-center justify-center w-full px-4 py-12 max-w-5xl mx-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-[var(--ksf-cream)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <!-- Whitespace separator before contact section removed -->
+      <!-- Contact Section visually merged with footer -->
+      <section id="contact" class="text-center w-screen relative left-1/2 right-1/2 -mx-[50vw] bg-[var(--ksf-green)] pb-0 mb-0 scroll-mt-24" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+        <div class="flex flex-col items-center justify-center w-full px-4 py-8 sm:py-12 max-w-5xl mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 mb-3 sm:mb-4 text-[var(--ksf-cream)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0a4 4 0 11-8 0 4 4 0 018 0zm0 0v4a4 4 0 01-8 0v-4" />
             <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2" />
             <path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" fill="none" />
           </svg>
-          <h2 class="text-3xl font-bold text-[var(--ksf-cream)] mb-2 font-serif">Contact</h2>
-          <div class="w-full flex flex-col md:flex-row md:items-center md:justify-center gap-8 gap-y-8 mt-6">
+          <h2 class="text-2xl sm:text-3xl font-bold text-[var(--ksf-cream)] mb-2 font-serif">Contact</h2>
+          <div class="w-full flex flex-col md:flex-row md:items-center md:justify-center gap-6 sm:gap-8 gap-y-6 sm:gap-y-8 mt-4 sm:mt-6">
             <!-- Left: Always centered on mobile, right on desktop -->
-            <div class="flex-1 flex flex-col items-center md:items-end border-b md:border-b-0 md:border-r border-[var(--ksf-cream)]/30 pb-8 md:pb-0 md:mb-0 mx-auto md:max-w-xl justify-center">
+            <div class="flex-1 flex flex-col items-center md:items-end border-b md:border-b-0 md:border-r border-[var(--ksf-cream)]/30 pb-6 sm:pb-8 md:pb-0 md:mb-0 mx-auto md:max-w-xl justify-center">
               <div class="flex flex-col items-center md:items-end px-2 sm:px-6 mx-auto">
                 <div class="flex items-center gap-2 mb-2 justify-center mx-auto">
-                  <svg xmlns='http://www.w3.org/2000/svg' class='h-8 w-8 text-[var(--ksf-cream)]' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='3' y='5' width='18' height='14' rx='2' fill='none' stroke='currentColor' stroke-width='2'/><path d='M3 7l9 6 9-6' stroke='currentColor' stroke-width='2' fill='none'/></svg>
-                  <a href="mailto:kingstreetfarms@gmail.com" class="text-2xl font-bold text-[var(--ksf-cream)] underline hover:text-white">kingstreetfarms@gmail.com</a>
+                  <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 sm:h-8 sm:w-8 text-[var(--ksf-cream)]' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='3' y='5' width='18' height='14' rx='2' fill='none' stroke='currentColor' stroke-width='2'/><path d='M3 7l9 6 9-6' stroke='currentColor' stroke-width='2' fill='none'/></svg>
+                  <a href="mailto:kingstreetfarms@gmail.com" class="text-lg sm:text-2xl font-bold text-[var(--ksf-cream)] underline hover:text-white">kingstreetfarms@gmail.com</a>
                 </div>
-                <div class="text-lg text-[var(--ksf-cream)] max-w-xs sm:max-w-md font-serif font-semibold mb-1 text-center md:text-right mx-auto">We'd love to hear from you!</div>
-                <div class="text-base text-[var(--ksf-cream)] max-w-xs sm:max-w-md text-center md:text-right mx-auto">Questions, feedback, or custom ideas? Drop us a line and our small team will get back to you soon.</div>
+                <div class="text-base sm:text-lg text-[var(--ksf-cream)] max-w-xs sm:max-w-md font-serif font-semibold mb-1 text-center md:text-right mx-auto">We'd love to hear from you!</div>
+                <div class="text-sm sm:text-base text-[var(--ksf-cream)] max-w-xs sm:max-w-md text-center md:text-right mx-auto">Questions, feedback, or custom ideas? Drop us a line and our small team will get back to you soon.</div>
               </div>
             </div>
             <!-- Right: Centered on mobile, left on desktop -->
-            <div class="flex-1 flex flex-col items-center md:items-start md:pl-8 text-[var(--ksf-cream)] mx-auto md:max-w-xl justify-center mt-8 md:mt-0">
-              <div class="text-lg font-semibold mb-1 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">We're a small, family-run shop in Denver, and we care about every customer and project.</div>
-              <div class="text-base mb-3 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Whether you want something custom or just have a question, we're here to help and always happy to chat.</div>
-              <div class="text-base text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Already have one of our pieces? Tag us on <span class='underline'>Facebook</span> or <span class='underline'>TikTok</span>—we love seeing your photos and stories!</div>
+            <div class="flex-1 flex flex-col items-center md:items-start md:pl-8 text-[var(--ksf-cream)] mx-auto md:max-w-xl justify-center mt-6 sm:mt-8 md:mt-0">
+              <div class="text-base sm:text-lg font-semibold mb-1 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">We're a small, family-run shop in Denver, and we care about every customer and project.</div>
+              <div class="text-sm sm:text-base mb-2 sm:mb-3 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Whether you want something custom or just have a question, we're here to help and always happy to chat.</div>
+              <div class="text-sm sm:text-base text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Already have one of our pieces? Tag us on <span class='underline'>Facebook</span> or <span class='underline'>TikTok</span>—we love seeing your photos and stories!</div>
             </div>
           </div>
         </div>
@@ -207,49 +214,50 @@
     <!-- Image Modal -->
     <div 
       v-if="showModal && currentProduct"
-      class="fixed inset-0 z-50 flex items-center justify-center"
+      class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-hidden"
       @click="closeModal"
+      :class="{ 'overflow-hidden': showModal }"
     >
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-black bg-opacity-75"></div>
       <!-- Modal Content: image and details side by side on desktop, stacked on mobile -->
       <div 
-        class="relative z-10 max-w-4xl w-full mx-4 flex flex-col sm:flex-row items-center sm:items-stretch bg-white rounded-lg overflow-hidden"
-        style="pointer-events: auto;"
+        class="relative z-10 max-w-4xl w-full mx-auto flex flex-col sm:flex-row items-center sm:items-stretch bg-white rounded-lg overflow-hidden"
+        style="pointer-events: auto; max-height: 90vh;"
         @click.stop
       >
         <!-- Close Button -->
         <button 
           @click.stop="closeModal"
-          class="absolute top-2 right-2 text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors z-20"
+          class="absolute top-2 right-2 text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors z-20 p-1 sm:p-2"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         <!-- Image/Gallery -->
-        <div class="w-full sm:w-1/2 flex flex-col items-center justify-center bg-black/80 p-4 relative">
+        <div class="w-full sm:w-1/2 flex flex-col items-center justify-center bg-black/80 p-3 sm:p-4 relative">
           <div class="relative w-full flex items-center justify-center">
             <img 
               :src="currentProduct.images[currentImageIndex].src"
               :alt="currentProduct.images[currentImageIndex].alt"
-              class="w-full h-auto max-h-[60vh] object-contain rounded-lg bg-white"
+              class="w-full h-auto max-h-[30vh] sm:max-h-[50vh] object-contain rounded-lg bg-white"
             >
             <!-- Navigation Arrows (only show if multiple images) -->
             <template v-if="currentProduct.images.length > 1">
               <button 
                 @click.stop="prevImage"
-                class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
+                class="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-1.5 sm:p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
               <button 
                 @click.stop="nextImage"
-                class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
+                class="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-1.5 sm:p-2 rounded-full hover:bg-opacity-75 transition-opacity z-10"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -257,34 +265,38 @@
             <!-- Image Counter (only show if multiple images) -->
             <div 
               v-if="currentProduct.images.length > 1"
-              class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm z-10"
+              class="absolute bottom-1 sm:bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs sm:text-sm z-10"
             >
               {{ currentImageIndex + 1 }} / {{ currentProduct.images.length }}
             </div>
           </div>
         </div>
         <!-- Details -->
-        <div class="w-full sm:w-1/2 flex flex-col justify-center p-6 bg-white text-[var(--ksf-dark)]">
-          <h2 class="text-2xl font-bold font-serif mb-2 text-[var(--ksf-green)]">{{ currentProduct.name }}</h2>
-          <div class="text-lg font-bold mb-2">${{ currentProduct.price }}</div>
-          <div class="mb-2 text-sm text-[var(--ksf-brown)] font-mono">{{ currentProduct.dimensions }}</div>
-          <div class="mb-4 text-base">{{ currentProduct.description }}</div>
-          <ul class="mb-4 text-sm list-disc pl-5">
-            <li v-for="feature in currentProduct.features" :key="feature">{{ feature }}</li>
-          </ul>
-          <div class="mb-4 text-sm">{{ currentProduct.delivery }}</div>
-          <div class="flex flex-col gap-2 w-full mt-2">
+        <div class="w-full sm:w-1/2 flex flex-col bg-white text-[var(--ksf-dark)]">
+          <!-- Scrollable content -->
+          <div class="flex-1 overflow-y-auto p-4 sm:p-6 max-h-[40vh] sm:max-h-none">
+            <h2 class="text-xl sm:text-2xl font-bold font-serif mb-2 text-[var(--ksf-green)]">{{ currentProduct.name }}</h2>
+            <div class="text-base sm:text-lg font-bold mb-2">${{ currentProduct.price }}</div>
+            <div class="text-xs sm:text-sm text-[var(--ksf-brown)] font-mono mb-2">{{ currentProduct.dimensions }}</div>
+            <div class="text-sm sm:text-base mb-3 sm:mb-4">{{ currentProduct.description }}</div>
+            <ul class="mb-3 sm:mb-4 text-xs sm:text-sm list-disc pl-4 sm:pl-5 space-y-1 sm:space-y-2">
+              <li v-for="feature in currentProduct.features" :key="feature">{{ feature }}</li>
+            </ul>
+            <div class="text-xs sm:text-sm mb-3 sm:mb-4">{{ currentProduct.delivery }}</div>
+          </div>
+          <!-- Fixed button section -->
+          <div class="p-4 sm:p-6 bg-white border-t border-gray-100 sticky bottom-0">
             <button
               v-if="currentProduct.is_retail"
               @click.stop="redirectToCheckout(currentProduct)"
-              class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+              class="w-full farmhouse-btn py-2.5 px-4 text-sm sm:text-base font-bold shadow-md transition-all duration-300 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
             >
               <span class="relative z-10">Buy Now (${{ currentProduct.price }})</span>
             </button>
             <button
               v-else
               @click.stop="redirectToCheckout(currentProduct)"
-              class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+              class="w-full farmhouse-btn py-2.5 px-4 text-sm sm:text-base font-bold shadow-md transition-all duration-300 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
             >
               <span class="relative z-10">Pay Deposit (${{ currentProduct.depositPrice }})</span>
             </button>
@@ -292,6 +304,11 @@
         </div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--ksf-green)] text-[var(--ksf-cream)] pt-0 pb-4 sm:pb-6" style="margin-top: 0; padding-top: 0; border-top: none;">
+      <!-- ... existing footer content ... -->
+    </footer>
   </div>
 </template>
 
@@ -341,18 +358,9 @@
   animation: fade-in-up 0.7s ease-out forwards;
 }
 
-/* Gallery button styles - keep simple */
+/* Remove gallery button styles since we're not using them anymore */
 .gallery-button {
-  transition: all 0.2s ease;
-  opacity: 0;
-}
-
-.product-tile:hover .gallery-button {
-  opacity: 1;
-}
-
-.gallery-button:hover {
-  background-color: rgba(0, 0, 0, 0.75) !important;
+  display: none;
 }
 
 /* Tile overlay transition - keep simple */
@@ -364,13 +372,45 @@
   background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.3) 100%);
 }
 
-/* View details text - keep simple */
-.view-details {
-  transition: all 0.2s ease;
+/* Super obvious view details indicator, centered and away from badge */
+.product-tile {
+  position: relative;
+}
+.product-tile .view-details {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s cubic-bezier(.4,0,.2,1);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  font-weight: 500;
+  z-index: 30;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.08);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+  background: rgba(30,30,30,0.28);
+  color: rgba(255,255,255,0.82);
+  letter-spacing: 0.02em;
+}
+.product-tile:hover .view-details,
+.product-tile:focus-within .view-details {
+  opacity: 1;
+  pointer-events: auto;
+  background: rgba(20,20,20,0.55);
+  border-color: rgba(255,255,255,0.32);
+  color: #fff;
+  transform: translate(-50%, 0) scale(1.08);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 2px 8px 0 rgba(0,0,0,0.12);
 }
 
-.product-tile:hover .view-details {
-  opacity: 0.8;
+/* Remove any gap between contact and footer */
+#contact {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+footer {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
 }
 
 /* Keep view all button styles but simplify */
@@ -388,10 +428,247 @@
 }
 
 /* Remove all other keyframe animations */
+
+/* Ensure modal content is properly contained */
+.fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.featured-view-details {
+  top: 2rem;
+}
+
+.featured-tile .view-details {
+  font-weight: 600;
+  box-shadow: 0 8px 32px 0 rgba(218, 165, 32, 0.18), 0 2px 8px 0 rgba(218, 165, 32, 0.12), 0 4px 24px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.08);
+  border: 1.5px solid rgba(218, 165, 32, 0.28);
+}
+
+.featured-tile:hover .view-details,
+.featured-tile:focus-within .view-details {
+  background: rgba(218, 165, 32, 0.18);
+  border-color: rgba(218, 165, 32, 0.45);
+  color: #fffbe6;
+  box-shadow: 0 12px 36px 0 rgba(218, 165, 32, 0.28), 0 4px 16px 0 rgba(218, 165, 32, 0.18);
+  transform: translate(-50%, 0) scale(1.12);
+}
+
+.regular-view-details {
+  top: 4rem;
+}
+
+/* On mobile, push tile-content closer to the bottom for hero featured tiles */
+.tile-content-bottom {
+  justify-content: flex-end;
+  padding-bottom: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  /* Featured tiles: more padding at bottom, less button margin */
+  .featured-tile .tile-content-bottom {
+    padding-bottom: 4.2rem;
+  }
+  .featured-tile .tile-content-bottom button {
+    margin-bottom: 0.5rem;
+  }
+  /* Regular tiles: less padding at bottom, more button margin */
+  .product-tile:not(.featured-tile) .tile-content {
+    padding-bottom: 1.5rem;
+  }
+  .product-tile:not(.featured-tile) .tile-content button {
+    margin-bottom: 0.9rem;
+  }
+  .mobile-tap-bar {
+    bottom: 0.3rem;
+  }
+  .featured-badge-mobile-fix {
+    top: 0.5rem !important;
+    left: 0.5rem !important;
+    z-index: 30;
+  }
+  .featured-view-details {
+    top: 2.7rem !important;
+  }
+  .view-details-indicator {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    display: flex !important;
+    align-items: center;
+    gap: 0.5em;
+    background: rgba(30,30,30,0.18);
+    border-radius: 9999px;
+    padding: 0.35em 1em;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+    border: 1px solid rgba(255,255,255,0.12);
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .product-tile:hover .view-details-indicator,
+  .product-tile:focus-within .view-details-indicator {
+    opacity: 1;
+  }
+  .mobile-tap-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    bottom: 0.6rem;
+    transform: translateX(-50%);
+    width: 65%;
+    min-width: 70px;
+    max-width: 90%;
+    background: rgba(30,30,30,0.62);
+    color: #fff;
+    font-size: 0.78em;
+    padding: 0.13em 0.5em 0.11em 0.5em;
+    border-radius: 9999px;
+    z-index: 40;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.13);
+    pointer-events: none;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    opacity: 0.88;
+  }
+  .featured-spacer {
+    flex-grow: 1;
+    min-height: 60px;
+  }
+}
+
+/* Desktop: keep center indicator */
+.desktop-view-details {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  background: rgba(30,30,30,0.28);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: 9999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.08);
+  color: rgba(255,255,255,0.82);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.product-tile:hover .desktop-view-details,
+.product-tile:focus-within .desktop-view-details {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile: small eye icon in bottom-right */
+.mobile-view-details {
+  display: none;
+}
+@media (max-width: 640px) {
+  .desktop-view-details {
+    display: none !important;
+  }
+  .mobile-view-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    z-index: 30;
+    background: rgba(30,30,30,0.18);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 9999px;
+    padding: 0.18rem 0.18rem 0.12rem 0.18rem;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+    color: rgba(255,255,255,0.65);
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 1.1rem;
+    opacity: 1;
+    pointer-events: none;
+  }
+  .mobile-view-details svg {
+    width: 1.3em;
+    height: 1.3em;
+    color: rgba(255,255,255,0.65);
+  }
+}
+
+/* Centered indicator for desktop only */
+.view-details-indicator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: rgba(30,30,30,0.18);
+  border-radius: 9999px;
+  padding: 0.35em 1em;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.product-tile:hover .view-details-indicator,
+.product-tile:focus-within .view-details-indicator {
+  opacity: 1;
+}
+
+/* Mobile: bottom bar for tap for details */
+@media (max-width: 640px) {
+  .view-details-indicator {
+    display: none !important;
+  }
+  .mobile-tap-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    bottom: 0.5rem;
+    transform: translateX(-50%);
+    width: 65%;
+    min-width: 70px;
+    max-width: 90%;
+    background: rgba(30,30,30,0.62);
+    color: #fff;
+    font-size: 0.78em;
+    padding: 0.13em 0.5em 0.11em 0.5em;
+    border-radius: 9999px;
+    z-index: 40;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.13);
+    pointer-events: none;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    opacity: 0.88;
+  }
+}
 </style>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
 interface ProductImage {
   src: string
@@ -788,21 +1065,17 @@ function scrollToFeatured() {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
-// Update the cycleCardImage function to handle image cycling properly
-function cycleCardImage(productId: number) {
-  console.log('Cycling image for product', productId)
-  const product = products.value.find(p => p.id === productId)
-  if (!product || product.images.length <= 1) {
-    console.log('No product found or only one image')
-    return
+// Add watch for modal state to prevent background scrolling
+watch(showModal, (newValue) => {
+  if (newValue) {
+    // Prevent background scrolling when modal is open
+    document.body.style.overflow = 'hidden'
+  } else {
+    // Restore scrolling when modal is closed
+    document.body.style.overflow = ''
   }
-  
-  const currentIndex = getCardImageIndex(productId)
-  const newIndex = (currentIndex + 1) % product.images.length
-  console.log('Setting new index to', newIndex)
-  // Force a reactive update by creating a new object
-  const newIndexes = { ...cardImageIndexes.value }
-  newIndexes[productId] = newIndex
-  cardImageIndexes.value = newIndexes
-}
+})
+
+// Tooltip for first-time mobile users
+const showMobileTooltip = ref(false)
 </script> 
