@@ -13,11 +13,11 @@
       <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
         <!-- Main Heading with Animation -->
         <div class="text-center mb-2 transform transition-all duration-700 ease-out opacity-0 translate-y-4 animate-fade-in-up">
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 text-center drop-shadow-lg font-serif">
+          <h1 class="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold mb-1 text-center drop-shadow-lg font-serif">
             Handcrafted Home Goods,<br class="hidden sm:block" />
             <span class="text-[var(--ksf-brown)]">Made in Denver</span>
           </h1>
-          <p class="text-sm sm:text-base max-w-xl mx-auto text-center opacity-90 leading-snug">
+          <p class="text-base xs:text-lg sm:text-xl max-w-xl mx-auto text-center opacity-90 leading-snug">
             Beautiful, durable furniture and storage for inside and outside your home. 
             Built to last, made to order, delivered fast.
           </p>
@@ -26,13 +26,13 @@
         <!-- Featured Products Section -->
         <div class="w-full max-w-6xl">
           <!-- Featured Header -->
-          <h2 class="text-lg font-bold text-center mb-2 text-[var(--ksf-cream)] font-serif">Featured Items</h2>
+          <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-center mb-2 text-[var(--ksf-cream)] font-serif">Featured Items</h2>
           
           <!-- Featured Products Grid with Animation -->
-          <div id="featured" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 transform transition-all duration-700 ease-out opacity-0 translate-y-4 animate-fade-in-up animation-delay-300">
+          <div id="featured" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
             <template v-for="(product, idx) in featuredProducts" :key="idx">
               <div v-if="product" 
-                   class="bg-white bg-opacity-95 rounded-xl shadow p-2 flex flex-col items-center hover:shadow-lg transition-shadow duration-200">
+                   class="bg-white bg-opacity-95 rounded-xl shadow p-2 flex flex-col items-center hover:shadow-lg transition-shadow duration-200 max-w-xs mx-auto w-full">
                 <div class="relative w-full aspect-square mb-2 overflow-hidden rounded-lg max-w-[140px] mx-auto">
                   <img :src="product.images[0].src" 
                        :alt="product.images[0].alt" 
@@ -89,7 +89,7 @@
 
       <!-- Product Grid -->
       <div id="shop" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-        <div v-for="product in products" :key="product.id" :id="`product-${product.id}`" class="farmhouse-card overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full min-h-[420px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)]">
+        <div v-for="product in products" :key="product.id" :id="`product-${product.id}`" class="farmhouse-card overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full min-h-[420px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] max-w-xs mx-auto w-full">
           <!-- Product Image -->
           <div 
             class="relative flex flex-col items-center cursor-pointer pt-2 px-2"
@@ -101,18 +101,6 @@
               class="w-full max-h-36 object-contain rounded transition-opacity"
               style="background: #f8f5f1;"
             >
-            <!-- Overlay carousel arrows if multiple images -->
-            <template v-if="product.images.length > 1">
-              <button @click.stop="setCardImageIndex(product.id, (getCardImageIndex(product.id) - 1 + product.images.length) % product.images.length)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 text-[var(--ksf-green)] rounded-full p-1 shadow focus:outline-none z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-              </button>
-              <button @click.stop="setCardImageIndex(product.id, (getCardImageIndex(product.id) + 1) % product.images.length)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-100 text-[var(--ksf-green)] rounded-full p-1 shadow focus:outline-none z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-              </button>
-              <div class="absolute bottom-2 right-2 bg-white bg-opacity-80 text-[var(--ksf-green)] text-xs rounded-full px-2 py-0.5 shadow">
-                {{ getCardImageIndex(product.id) + 1 }} / {{ product.images.length }}
-              </div>
-            </template>
             <!-- Overlay icon for modal -->
             <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-opacity flex items-center justify-center pointer-events-none">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -169,23 +157,23 @@
             <path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="2" fill="none" />
           </svg>
           <h2 class="text-3xl font-bold text-[var(--ksf-cream)] mb-2 font-serif">Contact</h2>
-          <div class="w-full flex flex-col md:flex-row md:items-center md:justify-center gap-8 mt-6">
-            <!-- Left: Vertically centered, balanced -->
-            <div class="flex-1 flex flex-col items-center md:items-end md:pr-8 border-b md:border-b-0 md:border-r border-[var(--ksf-cream)]/30 pb-8 md:pb-0 md:mb-0 max-w-xl mx-auto justify-center">
-              <div class="flex flex-col items-center md:items-end w-full px-6">
-                <div class="flex items-center gap-2 mb-2">
+          <div class="w-full flex flex-col md:flex-row md:items-center md:justify-center gap-8 gap-y-8 mt-6">
+            <!-- Left: Always centered on mobile, right on desktop -->
+            <div class="flex-1 flex flex-col items-center md:items-end border-b md:border-b-0 md:border-r border-[var(--ksf-cream)]/30 pb-8 md:pb-0 md:mb-0 mx-auto md:max-w-xl justify-center">
+              <div class="flex flex-col items-center md:items-end px-2 sm:px-6 mx-auto">
+                <div class="flex items-center gap-2 mb-2 justify-center mx-auto">
                   <svg xmlns='http://www.w3.org/2000/svg' class='h-8 w-8 text-[var(--ksf-cream)]' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='3' y='5' width='18' height='14' rx='2' fill='none' stroke='currentColor' stroke-width='2'/><path d='M3 7l9 6 9-6' stroke='currentColor' stroke-width='2' fill='none'/></svg>
                   <a href="mailto:kingstreetfarms@gmail.com" class="text-2xl font-bold text-[var(--ksf-cream)] underline hover:text-white">kingstreetfarms@gmail.com</a>
                 </div>
-                <div class="text-lg text-[var(--ksf-cream)] max-w-md md:text-right font-serif font-semibold mb-1">We'd love to hear from you!</div>
-                <div class="text-base text-[var(--ksf-cream)] max-w-md md:text-right">Questions, feedback, or custom ideas? Drop us a line and our small team will get back to you soon.</div>
+                <div class="text-lg text-[var(--ksf-cream)] max-w-xs sm:max-w-md font-serif font-semibold mb-1 text-center md:text-right mx-auto">We'd love to hear from you!</div>
+                <div class="text-base text-[var(--ksf-cream)] max-w-xs sm:max-w-md text-center md:text-right mx-auto">Questions, feedback, or custom ideas? Drop us a line and our small team will get back to you soon.</div>
               </div>
             </div>
-            <!-- Right: Vertically centered, balanced -->
-            <div class="flex-1 flex flex-col items-center md:items-start md:pl-8 text-[var(--ksf-cream)] max-w-xl mx-auto justify-center">
-              <div class="text-lg font-semibold mb-1 text-center md:text-left">We're a small, family-run shop in Denver, and we care about every customer and project.</div>
-              <div class="text-base mb-3 text-center md:text-left">Whether you want something custom or just have a question, we're here to help and always happy to chat.</div>
-              <div class="text-base text-center md:text-left">Already have one of our pieces? Tag us on <span class='underline'>Facebook</span> or <span class='underline'>TikTok</span>—we love seeing your photos and stories!</div>
+            <!-- Right: Centered on mobile, left on desktop -->
+            <div class="flex-1 flex flex-col items-center md:items-start md:pl-8 text-[var(--ksf-cream)] mx-auto md:max-w-xl justify-center mt-8 md:mt-0">
+              <div class="text-lg font-semibold mb-1 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">We're a small, family-run shop in Denver, and we care about every customer and project.</div>
+              <div class="text-base mb-3 text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Whether you want something custom or just have a question, we're here to help and always happy to chat.</div>
+              <div class="text-base text-center md:text-left max-w-xs sm:max-w-md mx-auto md:mx-0">Already have one of our pieces? Tag us on <span class='underline'>Facebook</span> or <span class='underline'>TikTok</span>—we love seeing your photos and stories!</div>
             </div>
           </div>
         </div>
