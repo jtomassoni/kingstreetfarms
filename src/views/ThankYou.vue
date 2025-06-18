@@ -1,20 +1,5 @@
 <template>
   <div class="min-h-screen bg-[var(--ksf-cream)]">
-    <!-- Navigation -->
-    <nav class="bg-[var(--ksf-green)] shadow-sm sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-          <div class="flex items-center space-x-3">
-            <svg viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8 w-12">
-              <path d="M0 24L12 8L24 24L36 12L48 24" stroke="#fff8f1" stroke-width="3" fill="none"/>
-              <circle cx="36" cy="12" r="2" fill="#a47551"/>
-            </svg>
-            <h1 class="text-xl sm:text-2xl font-bold text-[var(--ksf-cream)] tracking-wide drop-shadow">King Street Farms - Outdoor Goods</h1>
-          </div>
-        </div>
-      </div>
-    </nav>
-
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto">
