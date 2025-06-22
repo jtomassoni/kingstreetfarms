@@ -976,6 +976,52 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/3cI9AS8ZEaHC8cKcZ96g80f',
     is_retail: true
+  },
+  {
+    id: 13,
+    name: 'Raw Local Honey - 8 oz',
+    price: 12.00,
+    depositPrice: 12.00,
+    deliveryPrice: 10.00,
+    images: [
+      { src: '/coming-soon.jpg', alt: '8 oz jar of raw local honey from King Street Farms' }
+    ],
+    description: 'Pure. Unfiltered. Straight from the comb. From our hives to your home, this small-batch honey is harvested right here in Denver, Colorado, where bees forage on wildflowers, clover, and native blooms. Never heated or filtered, just clean, golden goodness the way nature intended.',
+    features: [
+      '100% raw and unfiltered',
+      'Chemical-free and naturally produced',
+      'Bottled in small batches with care',
+      'Perfect for daily sweetening, gifting, or tasting',
+      'Classic glass jar with rustic lid',
+      'Hand-labeled tag'
+    ],
+    dimensions: '8 oz jar',
+    delivery: 'Delivery available for $10',
+    depositUrl: 'https://buy.stripe.com/placeholder-8oz-honey',
+    is_retail: true
+  },
+  {
+    id: 14,
+    name: 'Raw Local Honey - 32 oz',
+    price: 32.00,
+    depositPrice: 32.00,
+    deliveryPrice: 10.00,
+    images: [
+      { src: '/coming-soon.jpg', alt: '32 oz jar of raw local honey from King Street Farms' }
+    ],
+    description: 'A full quart of liquid gold—ideal for tea lovers, home bakers, or families who go through the good stuff fast. Farm-fresh and sealed tight in a reusable mason jar. Pure, unfiltered honey from our Denver hives, never heated or processed.',
+    features: [
+      '100% raw and unfiltered',
+      'Chemical-free and naturally produced',
+      'Bottled in small batches with care',
+      'Perfect for tea, baking, or daily use',
+      'Reusable mason jar',
+      'Hand-labeled tag'
+    ],
+    dimensions: '32 oz jar',
+    delivery: 'Delivery available for $10',
+    depositUrl: 'https://buy.stripe.com/placeholder-32oz-honey',
+    is_retail: true
   }
 ]);
 
@@ -1046,6 +1092,7 @@ const featuredProducts = ref([
   products.value.find(p => p.name.includes('Beeswax Candle Set')),
   products.value.find(p => p.name.includes('Wine Rack')),
   products.value.find(p => p.name.includes('Quarter Cord')),
+  products.value.find(p => p.name.includes('Honey - 8 oz')),
 ].filter(Boolean))
 
 // Smooth scroll to shop
