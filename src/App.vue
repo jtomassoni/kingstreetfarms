@@ -69,21 +69,35 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 const showMobileNav = ref(false)
 
+function scrollToSection(hash: string, block: ScrollLogicalPosition = 'start') {
+  if (route.path === '/') {
+    const el = document.querySelector(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block });
+      // Also update the URL hash
+      router.push({ hash });
+    }
+  } else {
+    router.push({ path: '/', hash });
+  }
+}
+
 function scrollToHero() {
-  const el = document.querySelector('section');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToSection('#hero');
 }
 
 function scrollToContact() {
-  const el = document.getElementById('contact');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  scrollToSection('#contact', 'center');
 }
 
 function scrollToShop() {
-  const el = document.getElementById('shop');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToSection('#shop');
 }
 </script>
 

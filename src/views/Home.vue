@@ -666,7 +666,10 @@ footer {
 </style>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, onMounted, computed, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute();
 
 interface ProductImage {
   src: string
@@ -1194,6 +1197,28 @@ watch(showModal, (newValue) => {
     document.body.style.overflow = ''
   }
 })
+
+// Function to scroll to an element, waiting for the DOM to be ready
+const scrollToHash = (hash: string) => {
+  if (hash) {
+    nextTick(() => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+};
+
+// Watch for route hash changes to scroll to sections
+watch(() => route.hash, (hash) => {
+  scrollToHash(hash);
+});
+
+// Handle initial page load with a hash
+onMounted(() => {
+  scrollToHash(route.hash);
+});
 
 // Tooltip for first-time mobile users
 const showMobileTooltip = ref(false)
