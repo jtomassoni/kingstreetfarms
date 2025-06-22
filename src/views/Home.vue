@@ -65,7 +65,7 @@
                     <span class="indicator-text">View details</span>
                   </span>
                   <!-- Mobile bottom bar for tap for details -->
-                  <span class="mobile-tap-bar">Tap for details</span>
+                  <span class="mobile-tap-bar" style="display: none;">Tap for details</span>
                   <button
                     v-if="product.is_retail"
                     @click.stop="redirectToCheckout(product)"
@@ -158,7 +158,7 @@
                 <span class="indicator-text">View details</span>
               </span>
               <!-- Mobile bottom bar for tap for details -->
-              <span class="mobile-tap-bar">Tap for details</span>
+              <span class="mobile-tap-bar" style="display: none;">Tap for details</span>
               <button
                 v-if="product.is_retail"
                 @click.stop="redirectToCheckout(product)"
@@ -177,6 +177,7 @@
           </div>
         </div>
       </div>
+    </main>
 
       <!-- Whitespace separator before contact section removed -->
       <!-- Contact Section visually merged with footer -->
@@ -209,7 +210,6 @@
           </div>
         </div>
       </section>
-    </main>
 
     <!-- Image Modal -->
     <div 
@@ -339,27 +339,6 @@
 /* Remove all complex animations and effects */
 .product-tile .tile-content button::before,
 .product-tile .tile-content button::after {
-  display: none;
-}
-
-/* Keep other styles but remove button-specific animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.7s ease-out forwards;
-}
-
-/* Remove gallery button styles since we're not using them anymore */
-.gallery-button {
   display: none;
 }
 
@@ -664,6 +643,10 @@ footer {
     letter-spacing: 0.01em;
     opacity: 0.88;
   }
+}
+
+.mobile-tap-bar {
+  display: none;
 }
 </style>
 
@@ -984,7 +967,7 @@ const products = ref<Product[]>([
     depositPrice: 12.00,
     deliveryPrice: 10.00,
     images: [
-      { src: '/coming-soon.jpg', alt: '8 oz jar of raw local honey from King Street Farms' }
+      { src: '/kings-queen-honey-small-jar-white.jpg', alt: '8 oz jar of raw local honey' }
     ],
     description: 'Pure. Unfiltered. Straight from the comb. From our hives to your home, this small-batch honey is harvested right here in Denver, Colorado, where bees forage on wildflowers, clover, and native blooms. Never heated or filtered, just clean, golden goodness the way nature intended.',
     features: [
@@ -997,7 +980,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '8 oz jar',
     delivery: 'Delivery available for $10',
-    depositUrl: 'https://buy.stripe.com/placeholder-8oz-honey',
+    depositUrl: 'https://buy.stripe.com/5kQ14mb7MaHC1OmcZ96g80g',
     is_retail: true
   },
   {
@@ -1007,7 +990,7 @@ const products = ref<Product[]>([
     depositPrice: 32.00,
     deliveryPrice: 10.00,
     images: [
-      { src: '/coming-soon.jpg', alt: '32 oz jar of raw local honey from King Street Farms' }
+      { src: '/kings-queen-jars-in-window.jpg', alt: '32 oz jar of raw local honey' }
     ],
     description: 'A full quart of liquid gold—ideal for tea lovers, home bakers, or families who go through the good stuff fast. Farm-fresh and sealed tight in a reusable mason jar. Pure, unfiltered honey from our Denver hives, never heated or processed.',
     features: [
@@ -1020,7 +1003,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '32 oz jar',
     delivery: 'Delivery available for $10',
-    depositUrl: 'https://buy.stripe.com/placeholder-32oz-honey',
+    depositUrl: 'https://buy.stripe.com/7sYfZgdfUdTO8cK6AL6g80h',
     is_retail: true
   }
 ]);
