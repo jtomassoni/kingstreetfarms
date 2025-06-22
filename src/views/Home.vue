@@ -104,77 +104,92 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-4 pb-0 mb-0">
       <!-- Unified Product Section Header -->
-      <div id="shop" class="mb-4 sm:mb-6 text-center scroll-mt-24">
-        <h2 class="text-xl sm:text-2xl font-bold text-[var(--ksf-green)] font-serif mb-1">Shop All Products</h2>
-        <p class="text-sm sm:text-base text-[var(--ksf-dark)]">
+      <div id="shop" class="mb-4 sm:mb-6 text-center scroll-mt-24 py-8 sm:py-12">
+        <h2 class="text-3xl sm:text-4xl font-bold text-[var(--ksf-green)] font-serif mb-2">Shop All Products</h2>
+        <p class="text-base sm:text-lg text-[var(--ksf-dark)] max-w-2xl mx-auto">
           Browse our full range of handcrafted goods, made in Denver. &nbsp;|&nbsp; <span class="text-[var(--ksf-green)]">Delivery available in Denver area. Some products available for shipping.</span>
         </p>
       </div>
 
       <!-- Product Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 sm:mt-8 pb-8 sm:pb-12">
-        <div 
-          v-for="product in products" 
-          :key="product.id" 
-          :id="`product-${product.id}`" 
-          class="product-tile relative rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg transition-all duration-200 flex flex-col items-center max-w-[280px] sm:max-w-xs mx-auto w-full min-h-[420px] sm:min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] overflow-hidden cursor-pointer"
-          @click="() => { console.log('Tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
-        >
-          <!-- Featured badge for main grid only -->
-          <span v-if="featuredProducts.includes(product)" class="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[var(--ksf-brown)] text-[var(--ksf-cream)] text-xs font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-full shadow flex items-center gap-1 z-20 featured-badge-mobile-fix" style="box-shadow: 0 2px 8px rgba(0,0,0,0.10); min-height: 2.2rem;">
-            <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z"/></svg>
-            Featured
-          </span>
-          <!-- Full Background Image -->
-          <div class="absolute inset-0 w-full h-full z-0">
-            <img
-              :src="product.images[getCardImageIndex(product.id)].src"
-              :alt="product.images[getCardImageIndex(product.id)].alt"
-              class="w-full h-full object-cover object-center"
-            />
-            <!-- Multiple Images Indicator -->
-            <div v-if="product.images.length > 1" class="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1.5 sm:py-2 rounded-full text-xs flex items-center gap-1 z-10 gallery-count-tall" style="min-height:2.2rem;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {{ product.images.length }}
+      <div class="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div class="border-t border-gray-300">
+          <template v-for="category in productCategories" :key="category.name">
+            <div v-if="category.products.length > 0" class="accordion-item border-b border-gray-300">
+              <h2 @click="toggleCategory(category.name)" class="accordion-header flex justify-between items-center p-4 sm:p-6 cursor-pointer hover:bg-[var(--ksf-green)]/10 transition-colors">
+                  <span class="text-xl sm:text-2xl font-serif font-bold text-[var(--ksf-green)]">{{ category.name }}</span>
+                  <svg class="w-6 h-6 text-[var(--ksf-green)] transition-transform duration-300" :class="{ 'rotate-180': isCategoryOpen(category.name) }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </h2>
+  
+              <div v-if="isCategoryOpen(category.name)" class="accordion-content p-4 sm:p-6 bg-white/50">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div 
+                      v-for="product in category.products" 
+                      :key="product.id" 
+                      :id="`product-${product.id}`" 
+                      class="product-tile relative rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg transition-all duration-200 flex flex-col items-center max-w-[280px] sm:max-w-xs mx-auto w-full min-h-[420px] sm:min-h-[480px] group focus:outline-none focus:ring-2 focus:ring-[var(--ksf-brown)] overflow-hidden cursor-pointer"
+                      @click="() => { console.log('Tile clicked'); openImageModal(product, getCardImageIndex(product.id)); }"
+                    >
+                      <!-- Featured badge for main grid only -->
+                      <span v-if="featuredProducts.includes(product)" class="absolute top-3 sm:top-4 left-3 sm:left-4 bg-[var(--ksf-brown)] text-[var(--ksf-cream)] text-xs font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-full shadow flex items-center gap-1 z-20 featured-badge-mobile-fix" style="box-shadow: 0 2px 8px rgba(0,0,0,0.10); min-height: 2.2rem;">
+                        <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.75L18.2 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.44 4.73L5.8 21z"/></svg>
+                        Featured
+                      </span>
+                      <!-- Full Background Image -->
+                      <div class="absolute inset-0 w-full h-full z-0">
+                        <img
+                          :src="product.images[getCardImageIndex(product.id)].src"
+                          :alt="product.images[getCardImageIndex(product.id)].alt"
+                          class="w-full h-full object-cover object-center"
+                        />
+                        <!-- Multiple Images Indicator -->
+                        <div v-if="product.images.length > 1" class="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1.5 sm:py-2 rounded-full text-xs flex items-center gap-1 z-10 gallery-count-tall" style="min-height:2.2rem;">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {{ product.images.length }}
+                        </div>
+                      </div>
+                      <!-- Overlay for readability -->
+                      <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
+                      <!-- Product Info Overlay -->
+                      <div class="tile-content relative z-20 flex flex-col w-full h-full justify-end p-4 text-left">
+                        <h3 class="text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
+                        <div class="flex items-center justify-between w-full mb-2">
+                          <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
+                        </div>
+                        <div class="flex flex-col gap-2 w-full">
+                          <!-- Centered view details indicator for desktop, bottom bar for mobile -->
+                          <span class="view-details-indicator">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <span class="indicator-text">View details</span>
+                          </span>
+                          <!-- Mobile bottom bar for tap for details -->
+                          <span class="mobile-tap-bar" style="display: none;">Tap for details</span>
+                          <button
+                            v-if="product.is_retail"
+                            @click.stop="redirectToCheckout(product)"
+                            class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+                          >
+                            <span class="relative z-10">Buy Now (${{ product.price }})</span>
+                          </button>
+                          <button
+                            v-else
+                            @click.stop="redirectToCheckout(product)"
+                            class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
+                          >
+                            <span class="relative z-10">Pay Deposit (${{ product.depositPrice }})</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
             </div>
-          </div>
-          <!-- Overlay for readability -->
-          <div class="tile-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10 transition-all duration-300"></div>
-          <!-- Product Info Overlay -->
-          <div class="tile-content relative z-20 flex flex-col w-full h-full justify-end p-4 text-left">
-            <h3 class="text-lg font-serif font-bold text-white drop-shadow mb-1">{{ product.name }}</h3>
-            <div class="flex items-center justify-between w-full mb-2">
-              <div class="price text-lg text-white font-bold drop-shadow">${{ product.price }}</div>
-            </div>
-            <div class="flex flex-col gap-2 w-full">
-              <!-- Centered view details indicator for desktop, bottom bar for mobile -->
-              <span class="view-details-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                <span class="indicator-text">View details</span>
-              </span>
-              <!-- Mobile bottom bar for tap for details -->
-              <span class="mobile-tap-bar" style="display: none;">Tap for details</span>
-              <button
-                v-if="product.is_retail"
-                @click.stop="redirectToCheckout(product)"
-                class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
-              >
-                <span class="relative z-10">Buy Now (${{ product.price }})</span>
-              </button>
-              <button
-                v-else
-                @click.stop="redirectToCheckout(product)"
-                class="w-full farmhouse-btn py-2 px-4 text-base font-bold shadow-md transition-all duration-300 mb-2 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group"
-              >
-                <span class="relative z-10">Pay Deposit (${{ product.depositPrice }})</span>
-              </button>
-            </div>
-          </div>
+          </template>
         </div>
       </div>
     </main>
@@ -651,7 +666,7 @@ footer {
 </style>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 
 interface ProductImage {
   src: string
@@ -671,6 +686,7 @@ interface Product {
   delivery: string
   depositUrl: string
   is_retail: boolean
+  category: 'Save Our Pollinators' | 'Indoors' | 'Outdoors'
 }
 
 const showModal = ref(false)
@@ -701,7 +717,8 @@ const products = ref<Product[]>([
     dimensions: '19" tall x 24" wide (plus 1.5" below for wine glass holders)',
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/8x27sK4Jo8zu9gO0cn6g80d',
-    is_retail: true
+    is_retail: true,
+    category: 'Indoors'
   },
   {
     id: 2,
@@ -725,7 +742,8 @@ const products = ref<Product[]>([
     dimensions: '48" wide x 22" deep x 25.5" tall',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/28E4gy3Fk5ni2Sq8IT6g801',
-    is_retail: false
+    is_retail: false,
+    category: 'Outdoors'
   },
   {
     id: 3,
@@ -748,7 +766,8 @@ const products = ref<Product[]>([
     dimensions: '36" wide x 18" deep x 48" tall (custom sizes available)',
     delivery: 'Delivery available in the Denver area for $125',
     depositUrl: 'https://buy.stripe.com/4gM5kC4Jo02Y50ygbl6g803',
-    is_retail: false
+    is_retail: false,
+    category: 'Outdoors'
   },
   {
     id: 4,
@@ -770,7 +789,8 @@ const products = ref<Product[]>([
     dimensions: '24" wide x 12" deep x 12" tall',
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/7sYeVcfo2eXS9gOgbl6g80e',
-    is_retail: true
+    is_retail: true,
+    category: 'Outdoors'
   },
   {
     id: 5,
@@ -793,7 +813,8 @@ const products = ref<Product[]>([
     dimensions: '48" wide x 18" deep x 18" tall (seat height)',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/28E5kC1xc7vqfFc2kv6g805',
-    is_retail: true
+    is_retail: true,
+    category: 'Outdoors'
   },
   {
     id: 6,
@@ -815,7 +836,8 @@ const products = ref<Product[]>([
     dimensions: '2\' x 4\' x 5\'',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/dRm00i8ZE1728cK1gr6g80c',
-    is_retail: true
+    is_retail: true,
+    category: 'Outdoors'
   },
   {
     id: 7,
@@ -838,7 +860,8 @@ const products = ref<Product[]>([
     dimensions: '2\' x 6\' x 6\'',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/7sY00iejYeXS9gO3oz6g807',
-    is_retail: false
+    is_retail: false,
+    category: 'Outdoors'
   },
   {
     id: 8,
@@ -860,7 +883,8 @@ const products = ref<Product[]>([
     dimensions: '4\' x 4\' x 8\'',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808',
-    is_retail: false
+    is_retail: false,
+    category: 'Outdoors'
   },
   {
     id: 9,
@@ -884,7 +908,8 @@ const products = ref<Product[]>([
     dimensions: '36" wide x 20" deep x 54" tall (custom sizes available)',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/aFafZg0t8eXSakScZ96g80a',
-    is_retail: false
+    is_retail: false,
+    category: 'Outdoors'
   },
   {
     id: 10,
@@ -908,7 +933,8 @@ const products = ref<Product[]>([
     dimensions: '72" wide x 36" deep x 30" tall',
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/7sYbJ0cbQ4je0Ki4sD6g809',
-    is_retail: false
+    is_retail: false,
+    category: 'Indoors'
   },
   {
     id: 11,
@@ -934,7 +960,8 @@ const products = ref<Product[]>([
     dimensions: '20" wide x 20" deep x 16" tall',
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/aFa3cu4Jo4je1OmaR16g80b',
-    is_retail: false
+    is_retail: false,
+    category: 'Indoors'
   },
   {
     id: 12,
@@ -958,7 +985,8 @@ const products = ref<Product[]>([
     dimensions: 'Set: 1x 3\"x4\", 1x 2\"x3\"',
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/3cI9AS8ZEaHC8cKcZ96g80f',
-    is_retail: true
+    is_retail: true,
+    category: 'Save Our Pollinators'
   },
   {
     id: 13,
@@ -981,7 +1009,8 @@ const products = ref<Product[]>([
     dimensions: '8 oz jar',
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/5kQ14mb7MaHC1OmcZ96g80g',
-    is_retail: true
+    is_retail: true,
+    category: 'Save Our Pollinators'
   },
   {
     id: 14,
@@ -1004,7 +1033,30 @@ const products = ref<Product[]>([
     dimensions: '32 oz jar',
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/7sYfZgdfUdTO8cK6AL6g80h',
-    is_retail: true
+    is_retail: true,
+    category: 'Save Our Pollinators'
+  },
+  {
+    id: 15,
+    name: 'Beeswaxed Pinecone Firestarters (4-Pack)',
+    price: 12.00,
+    depositPrice: 12.00,
+    deliveryPrice: 10.00,
+    images: [
+      { src: '/firestarters.jpg', alt: 'A 4-pack of beeswax-dipped pinecone firestarters' }
+    ],
+    description: "Need a little spark? These handcrafted pinecone firestarters are dipped in pure beeswax for a long, even burn that makes lighting your fireplace, fire pit, or campfire a breeze. No chemicals. No paraffin. Just beeswax, twine, and pinecones — straight from nature.",
+    features: [
+      '4-pack of assorted pinecones',
+      'Sealed in clear compostable bag with kraft paper label',
+      'Burns 8–10 minutes each',
+      'Handmade by King Street Farms in Denver, CO'
+    ],
+    dimensions: '4-pack (shapes and sizes vary)',
+    delivery: 'Delivery available for $10',
+    depositUrl: 'https://buy.stripe.com/9B6cN46Rw8zu9gO2kv6g80i',
+    is_retail: true,
+    category: 'Save Our Pollinators'
   }
 ]);
 
@@ -1069,6 +1121,43 @@ const getCardImageIndex = (productId: number) => {
   console.log('Getting image index for product', productId, ':', index)
   return index
 }
+
+// State for collapsible categories
+const openCategories = ref(['Save Our Pollinators', 'Indoors', 'Outdoors']); // Default to all open
+
+const toggleCategory = (categoryName: string) => {
+  const index = openCategories.value.indexOf(categoryName);
+  if (index > -1) {
+    openCategories.value.splice(index, 1);
+  } else {
+    openCategories.value.push(categoryName);
+  }
+};
+
+const isCategoryOpen = (categoryName: string) => {
+  return openCategories.value.includes(categoryName);
+};
+
+// Group products by category
+const productCategories = computed(() => {
+  const categories = ['Save Our Pollinators', 'Indoors', 'Outdoors'];
+  const grouped: { [key: string]: Product[] } = {};
+
+  // Initialize with all categories to maintain order
+  for (const category of categories) {
+    grouped[category] = [];
+  }
+
+  // Group products
+  for (const product of products.value) {
+    if (product.category in grouped) {
+      grouped[product.category].push(product);
+    }
+  }
+
+  // Return as an array of objects
+  return Object.entries(grouped).map(([name, products]) => ({ name, products }));
+});
 
 // Select favorite products for the hero grid
 const featuredProducts = ref([
