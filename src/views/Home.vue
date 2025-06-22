@@ -17,7 +17,7 @@
             Handcrafted Home Goods, <span class="text-[var(--ksf-brown)]">Made in Denver</span>
           </h1>
           <p class="text-sm sm:text-base max-w-xs sm:max-w-sm mx-auto text-center opacity-90 leading-snug mb-0">
-            Beautiful, durable furniture and storage for your home.
+            Beautiful, durable furniture and storage for your home, alongside local honey and beeswax products that help support our pollinators.
           </p>
         </div>
       </div>
