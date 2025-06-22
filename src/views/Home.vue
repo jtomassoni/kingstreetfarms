@@ -12,7 +12,7 @@
       <!-- Hero Content -->
       <div class="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto items-center justify-start pt-6 sm:pt-8 pb-6 sm:pb-8 px-4 sm:px-6">
         <!-- Main Heading with Animation -->
-        <div class="text-center mb-6 sm:mb-8 mt-2 sm:mt-4 transform transition-all duration-700 ease-out opacity-0 translate-y-2 animate-fade-in-up">
+        <div class="text-center mb-6 sm:mb-8 mt-2 sm:mt-4 transform transition-all duration-700 ease-out animate-fade-in-up">
           <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center drop-shadow-lg font-serif leading-tight">
             Handcrafted Home Goods, <span class="text-[var(--ksf-brown)]">Made in Denver</span>
           </h1>
@@ -962,19 +962,19 @@ const products = ref<Product[]>([
   },
   {
     id: 13,
-    name: 'Raw Local Honey - 8 oz',
+    name: 'Organic Local Honey - 8 oz',
     price: 12.00,
     depositPrice: 12.00,
     deliveryPrice: 10.00,
     images: [
-      { src: '/kings-queen-honey-small-jar-white.jpg', alt: '8 oz jar of raw local honey' }
+      { src: '/kings-queen-honey-small-jar-white.jpg', alt: '8 oz jar of organic local honey' }
     ],
-    description: 'Pure. Unfiltered. Straight from the comb. From our hives to your home, this small-batch honey is harvested right here in Denver, Colorado, where bees forage on wildflowers, clover, and native blooms. Never heated or filtered, just clean, golden goodness the way nature intended.',
+    description: 'Pure, organic local honey. Straight from the comb. From our hives to your home, this small-batch honey is harvested right here in Denver, Colorado, where bees forage on wildflowers, clover, and native blooms. It is lightly strained to ensure cleanliness but is never heated or processed, preserving its natural enzymes and pollen.',
     features: [
-      '100% raw and unfiltered',
+      '100% raw organic local honey',
       'Chemical-free and naturally produced',
       'Bottled in small batches with care',
-      'Perfect for daily sweetening, gifting, or tasting',
+      'Lightly strained, never processed',
       'Classic glass jar with rustic lid',
       'Hand-labeled tag'
     ],
@@ -985,19 +985,19 @@ const products = ref<Product[]>([
   },
   {
     id: 14,
-    name: 'Raw Local Honey - 32 oz',
+    name: 'Organic Local Honey - 32 oz',
     price: 32.00,
     depositPrice: 32.00,
     deliveryPrice: 10.00,
     images: [
-      { src: '/kings-queen-jars-in-window.jpg', alt: '32 oz jar of raw local honey' }
+      { src: '/kings-queen-jars-in-window.jpg', alt: '32 oz jar of organic local honey' }
     ],
-    description: 'A full quart of liquid gold—ideal for tea lovers, home bakers, or families who go through the good stuff fast. Farm-fresh and sealed tight in a reusable mason jar. Pure, unfiltered honey from our Denver hives, never heated or processed.',
+    description: 'A full quart of liquid gold—ideal for tea lovers, home bakers, or families who go through the good stuff fast. Our organic local honey is farm-fresh and sealed tight in a reusable mason jar. Harvested from our Denver hives, it is lightly strained for purity but never heated or processed.',
     features: [
-      '100% raw and unfiltered',
+      '100% raw organic local honey',
       'Chemical-free and naturally produced',
       'Bottled in small batches with care',
-      'Perfect for tea, baking, or daily use',
+      'Lightly strained, never processed',
       'Reusable mason jar',
       'Hand-labeled tag'
     ],
