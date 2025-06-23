@@ -320,6 +320,97 @@
       </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div 
+      v-if="showCheckoutModal && checkoutProduct"
+      class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-hidden"
+      @click="closeCheckoutModal"
+      :class="{ 'overflow-hidden': showCheckoutModal }"
+    >
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black bg-opacity-75"></div>
+      <!-- Modal Content -->
+      <div 
+        class="relative z-10 w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden"
+        style="pointer-events: auto;"
+        @click.stop
+      >
+        <!-- Close Button -->
+        <button 
+          @click.stop="closeCheckoutModal"
+          class="absolute top-2 right-2 text-[var(--ksf-green)] hover:text-[var(--ksf-brown)] transition-colors z-20 p-1 sm:p-2 bg-white rounded-full shadow"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-200 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-[var(--ksf-green)] rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold font-serif text-[var(--ksf-green)] mb-2">{{ checkoutProduct.name }}</h2>
+          <p class="text-lg font-bold text-[var(--ksf-brown)]">
+            {{ checkoutProduct.is_retail ? `Total: $${checkoutProduct.price}` : `Deposit: $${checkoutProduct.depositPrice}` }}
+          </p>
+        </div>
+        
+        <!-- Product Details -->
+        <div class="p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <img 
+              :src="checkoutProduct.images[0].src"
+              :alt="checkoutProduct.images[0].alt"
+              class="w-16 h-16 object-cover rounded-lg"
+            />
+            <div class="flex-1">
+              <p class="text-sm text-gray-600 mb-1">{{ checkoutProduct.dimensions }}</p>
+              <p class="text-sm text-gray-600">{{ checkoutProduct.delivery }}</p>
+            </div>
+          </div>
+          
+          <div class="bg-gray-50 rounded-lg p-4 mb-6">
+            <h3 class="font-semibold text-[var(--ksf-green)] mb-2">What's included:</h3>
+            <ul class="text-sm text-gray-700 space-y-1">
+              <li v-for="feature in checkoutProduct.features.slice(0, 3)" :key="feature" class="flex items-start">
+                <svg class="h-4 w-4 text-[var(--ksf-green)] mt-0.5 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {{ feature }}
+              </li>
+              <li v-if="checkoutProduct.features.length > 3" class="text-xs text-gray-500 italic">
+                + {{ checkoutProduct.features.length - 3 }} more features
+              </li>
+            </ul>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="space-y-3">
+            <button
+              @click.stop="proceedToCheckout"
+              class="w-full farmhouse-btn py-3 px-4 text-base font-bold shadow-md transition-all duration-300 bg-[var(--ksf-green)] text-white border-none relative overflow-hidden group hover:bg-[var(--ksf-brown)]"
+            >
+              <span class="relative z-10 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                {{ checkoutProduct.is_retail ? 'Complete Purchase' : 'Pay Deposit' }}
+              </span>
+            </button>
+            <button
+              @click.stop="closeCheckoutModal"
+              class="w-full py-2 px-4 text-sm text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-[var(--ksf-green)] text-[var(--ksf-cream)] pt-0 pb-4 sm:pb-6" style="margin-top: 0; padding-top: 0; border-top: none;">
       <!-- ... existing footer content ... -->
@@ -1079,6 +1170,11 @@ const closeModal = () => {
   currentProduct.value = null
 }
 
+const closeCheckoutModal = () => {
+  showCheckoutModal.value = false
+  checkoutProduct.value = null
+}
+
 const nextImage = () => {
   if (currentProduct.value) {
     currentImageIndex.value = (currentImageIndex.value + 1) % currentProduct.value.images.length
@@ -1116,6 +1212,15 @@ const redirectToCheckout = (product: Product) => {
   
   // Redirect to checkout
   window.open(product.depositUrl, '_blank')
+}
+
+const proceedToCheckout = () => {
+  if (checkoutProduct.value) {
+    // Open Stripe link in new tab
+    window.open(checkoutProduct.value.depositUrl, '_blank')
+    // Close the modal
+    closeCheckoutModal()
+  }
 }
 
 // Get the main image index for a product card (default to 0)
