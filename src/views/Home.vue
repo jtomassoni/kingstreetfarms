@@ -780,6 +780,7 @@ interface Product {
   delivery: string
   depositUrl: string
   is_retail: boolean
+  is_featured: boolean
   category: 'Save Our Pollinators' | 'Indoors' | 'Outdoors'
 }
 
@@ -816,6 +817,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/8x27sK4Jo8zu9gO0cn6g80d',
     is_retail: true,
+    is_featured: true,
     category: 'Indoors'
   },
   {
@@ -841,6 +843,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/28E4gy3Fk5ni2Sq8IT6g801',
     is_retail: false,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -865,6 +868,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available in the Denver area for $125',
     depositUrl: 'https://buy.stripe.com/4gM5kC4Jo02Y50ygbl6g803',
     is_retail: false,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -888,6 +892,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/7sYeVcfo2eXS9gOgbl6g80e',
     is_retail: true,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -912,6 +917,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/28E5kC1xc7vqfFc2kv6g805',
     is_retail: true,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -935,6 +941,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/dRm00i8ZE1728cK1gr6g80c',
     is_retail: true,
+    is_featured: true,
     category: 'Outdoors'
   },
   {
@@ -959,6 +966,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/7sY00iejYeXS9gO3oz6g807',
     is_retail: false,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -982,6 +990,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'i ',
     is_retail: false,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -1007,6 +1016,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/aFafZg0t8eXSakScZ96g80a',
     is_retail: false,
+    is_featured: false,
     category: 'Outdoors'
   },
   {
@@ -1032,6 +1042,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available within Denver area for $150',
     depositUrl: 'https://buy.stripe.com/7sYbJ0cbQ4je0Ki4sD6g809',
     is_retail: false,
+    is_featured: false,
     category: 'Indoors'
   },
   {
@@ -1059,6 +1070,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $15',
     depositUrl: 'https://buy.stripe.com/aFa3cu4Jo4je1OmaR16g80b',
     is_retail: false,
+    is_featured: false,
     category: 'Indoors'
   },
   {
@@ -1084,6 +1096,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/3cI9AS8ZEaHC8cKcZ96g80f',
     is_retail: true,
+    is_featured: true,
     category: 'Save Our Pollinators'
   },
   {
@@ -1108,6 +1121,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/5kQ14mb7MaHC1OmcZ96g80g',
     is_retail: true,
+    is_featured: true,
     category: 'Save Our Pollinators'
   },
   {
@@ -1132,6 +1146,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/7sYfZgdfUdTO8cK6AL6g80h',
     is_retail: true,
+    is_featured: false,
     category: 'Save Our Pollinators'
   },
   {
@@ -1154,6 +1169,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/9B6cN46Rw8zu9gO2kv6g80i',
     is_retail: true,
+    is_featured: false,
     category: 'Save Our Pollinators'
   },
   {
@@ -1178,6 +1194,7 @@ const products = ref<Product[]>([
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/eVqdR8a3I6rm0KibV56g80j',
     is_retail: true,
+    is_featured: false,
     category: 'Save Our Pollinators'
   }
 ]);
@@ -1296,12 +1313,9 @@ const productCategories = computed(() => {
 });
 
 // Select favorite products for the hero grid
-const featuredProducts = ref([
-  products.value.find(p => p.name.includes('Beeswax Candle Set')),
-  products.value.find(p => p.name.includes('Wine Rack')),
-  products.value.find(p => p.name.includes('Quarter Cord')),
-  products.value.find(p => p.name.includes('Honey - 8 oz')),
-].filter(Boolean))
+const featuredProducts = computed(() => {
+  return products.value.filter(product => product.is_featured)
+})
 
 // Smooth scroll to shop
 function scrollToShop() {
