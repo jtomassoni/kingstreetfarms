@@ -787,6 +787,10 @@ const showModal = ref(false)
 const currentProduct = ref<Product | null>(null)
 const currentImageIndex = ref(0)
 
+// Add missing checkout modal variables
+const showCheckoutModal = ref(false)
+const checkoutProduct = ref<Product | null>(null)
+
 // Track the main image index for each product card
 const cardImageIndexes = ref<{ [key: number]: number }>({})
 
@@ -976,7 +980,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '4\' x 4\' x 8\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808',
+    depositUrl: 'i ',
     is_retail: false,
     category: 'Outdoors'
   },
@@ -1149,6 +1153,30 @@ const products = ref<Product[]>([
     dimensions: '4-pack (shapes and sizes vary)',
     delivery: 'Delivery available for $10',
     depositUrl: 'https://buy.stripe.com/9B6cN46Rw8zu9gO2kv6g80i',
+    is_retail: true,
+    category: 'Save Our Pollinators'
+  },
+  {
+    id: 16,
+    name: 'Her Majesty\'s Bee Garden Kit',
+    price: 12.00,
+    depositPrice: 12.00,
+    deliveryPrice: 10.00,
+    images: [
+      { src: '/bee-garden-seed-kit.jpg', alt: 'Her Majesty\'s Bee Garden Seed Kit - a collection of pollinator-friendly seeds' }
+    ],
+    description: "Inspired by our beloved Queen Mary, whose grace and dedication to community service has touched hearts around the world, this carefully curated seed collection brings the beauty of pollinator-friendly flowers to your garden. Each seed packet is selected to attract and nourish our precious bee population, creating a haven for these essential pollinators. With gratitude for Her Majesty's unwavering commitment to environmental stewardship and her inspiration for everything we do, this kit helps you create a small piece of paradise that supports our ecosystem. Perfect for beginners and experienced gardeners alike.",
+    features: [
+      'Curated selection of pollinator-friendly seeds',
+      'Includes annual and perennial varieties',
+      'Easy-to-grow flowers that bees love',
+      'Detailed planting instructions included',
+      'Supports local bee populations',
+      'Inspired by Queen Mary\'s environmental values'
+    ],
+    dimensions: 'Seed kit with multiple varieties',
+    delivery: 'Delivery available for $10',
+    depositUrl: 'https://buy.stripe.com/eVqdR8a3I6rm0KibV56g80j',
     is_retail: true,
     category: 'Save Our Pollinators'
   }
