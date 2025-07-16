@@ -988,7 +988,7 @@ const products = ref<Product[]>([
     ],
     dimensions: '4\' x 4\' x 8\'',
     delivery: 'Delivery available within Denver area for $150',
-    depositUrl: 'i ',
+    depositUrl: 'https://buy.stripe.com/5kQ8wOfo29Dy3Wugbl6g808',
     is_retail: false,
     is_featured: false,
     category: 'Outdoors'
