@@ -1,5 +1,19 @@
-# Vue 3 + TypeScript + Vite
+# King Street Farms
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Marketing site for the King Street Farms brand — EcoLawns Denver, workshop & garden.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+**Focus:** EcoLawns Denver (electric lawn care), workshop and garden improvements. Custom woodworking is currently on pause.
+
+## Tech
+
+- Next.js 15, React, Tailwind
+- Admin CMS at `/admin` for products/sections (for when shop returns)
+
+## Local dev
+
+```bash
+npm install
+npm run dev
+```
+
+Runs Next.js dev server at `http://localhost:3000`. Same setup as Monaghans and other Next.js projects.
