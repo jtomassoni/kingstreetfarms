@@ -5,8 +5,9 @@ import Footer from '@/components/footer';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'King Street Farms - Eco-Friendly Living in Denver',
-  description: 'King Street Farms: EcoLawns Denver electric lawn care, workshop and garden. Sustainable living in Denver.',
+  title: 'King Street Farms',
+  description:
+    'King Street Farms operates businesses in web design, woodworking, landscaping, and hospitality. Always open to new connections.',
 };
 
 export default function RootLayout({
