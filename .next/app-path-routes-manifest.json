@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/cms/login/route": "/api/cms/login",
+  "/api/cms/logout/route": "/api/cms/logout",
+  "/api/cms/me/route": "/api/cms/me",
+  "/api/cms/sections/route": "/api/cms/sections",
+  "/api/cms/products/route": "/api/cms/products",
+  "/api/cms/seed/route": "/api/cms/seed",
+  "/api/cms/settings/route": "/api/cms/settings",
+  "/(site)/page": "/",
+  "/admin/login/page": "/admin/login",
+  "/(site)/thank-you/page": "/thank-you",
+  "/admin/page": "/admin"
+}
